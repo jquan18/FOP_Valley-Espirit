@@ -1,0 +1,75 @@
+warrior
+Roaring
+10
+Unleashes a powerful attack, dealing heavy damage to the target
+4
+warrior
+Earthquake
+20
+Slam the ground, causing a shockwave that knocks back enemies and interrupts their abilities.
+5
+warrior
+Antifragile
+30
+The Warrior creates a barrier with their shield, nullify damage for 1 round
+6
+mage
+Fireball
+10
+Hurls a fiery projectile at the target, dealing moderate fire damage.
+4
+mage
+Huatuo
+20
+Emits a healing aura, restoring the healthPoints to oneself and nearby allies.
+5
+mage
+Frozen
+30
+Releases a burst of frost,freezing nearbyu enemies in place for 10 seconds
+6
+rogue
+Rapid
+10
+Rague can moves instantaneous to another location.
+4
+rogue
+Backstab
+20
+Rague can snakes behind the target, delivering a devastating backstab,causing extra damge for enemy.
+5
+rogue
+Copycat
+30
+Ragur can copy an ability of any archetype and use for one round.
+6
+paladin
+Justice
+10
+Samshes the target with Justice Hammer and stuns the target for 10 seconds.
+4
+paladin
+Fellowship
+20
+Creates a protective barrier the Paladin,rendering them immune to damage for 2 .
+5
+paladin
+God
+30
+Interrupt the replenish of manaPoints of the monster
+6
+archer
+Shot
+10
+Fires a flurry of arrows at the targer dealing moderate damage.
+4
+archer
+Anna
+20
+Shoots an arrow imbued with frost,slowing down the movemet and attack speed of the target for 15 seconds
+5
+archer
+Rain
+30
+Fires a rain of arrows at a wide area and damage all the target in the area
+6
