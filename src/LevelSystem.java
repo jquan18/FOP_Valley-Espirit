@@ -9,10 +9,7 @@ class LevelSystem {
 	int firstSpell = 1, secondSpell = 1; // Chance of player to learn spell
 	int chance_upgrade = 4;
 	int new_point = 0;
-	Player player;
-
-	String[] attributes = { "healthPoints", "manaPoints", "physicalDefense", "magicalDefense", "physicalAttack",
-			"magicalAttack" };
+	private Player player;
 
 	public LevelSystem(Player player) {
 		RequieredEXP();
@@ -89,7 +86,36 @@ class LevelSystem {
 		String enchance = "";
 		new_point = currentLevel - previousLevel;
 		for (; new_point > 0; new_point--) {
-			enchance = attributes[rand.nextInt(6)];
+			String player_archetype= player.getArchetypeName();
+			switch (player_archetype) {
+				case "archer":
+					String[] attributes_archer = { "healthPoints",  "physicalAttack"};
+					enchance = attributes_archer[rand.nextInt(2)];
+					break;
+
+				case "paladin":
+					String[] attributes_paladin ={ "healthPoints", "manaPoints", "physicalDefense", "magicalDefense", "physicalAttack"};
+					enchance = attributes_paladin[rand.nextInt(5)];
+					break;
+
+				case "warrior" :
+					String[] attributes_warrior = {"healthPoints", "physicalDefense", "magicalDefense","physicalAttack"};
+					enchance = attributes_warrior[rand.nextInt(4)];
+					break;
+
+				case "mage" :
+					String[] attributes_mage = {"manaPoints","magicalDefense","magicalAttack"};
+					enchance = attributes_mage[rand.nextInt(3)];
+					break;
+
+				case "rogue" :
+					String[] attributes_rogue = {"healthPoints",  "physicalAttack", "physicalDefense"};
+					enchance = attributes_rogue[rand.nextInt(3)];
+					break;
+				default:
+					break;
+
+			}
 			switch (enchance) {
 				case "healthPoints":
 					System.out.println("Your healthPoint become stronger!");
@@ -130,5 +156,13 @@ class LevelSystem {
 	public void setCurrentEXP(int EXP) {
 		this.currentEXP = EXP;
 	}
-
+	public String getCurrentLevel() {
+		int i = 0;
+		previousLevel = currentLevel;
+		while (currentEXP > RequiredEXP[i]) {
+			currentLevel = i + 1;
+			i++;
+		}
+		return "Level " + (i+1);
+	}
 }

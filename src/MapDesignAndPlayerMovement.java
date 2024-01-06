@@ -1,11 +1,15 @@
 package Y1S1.FOP_Valley2.src;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class MapDesignAndPlayerMovement {
-
 
 	// public static int a = 1, b = 20;// P location, a row, b column
 	// public static final String ANSI_RESET = "\u001B[0m";
@@ -17,7 +21,6 @@ public class MapDesignAndPlayerMovement {
 
 	private Player player;
 
-
 	public MapDesignAndPlayerMovement(int a, int b) {
 		this.a = a;
 		this.b = b;
@@ -25,8 +28,15 @@ public class MapDesignAndPlayerMovement {
 
 	public void map_main(Player player) {
 		this.player = player;
-		char[][] map = Map();
+
+		char[][] map = readMatrix();
+
+		if (map == null) {
+			map = Map();
+			saveMatrix(map);
+		}
 		Move(map);
+		saveMatrix(map);
 	}
 
 	public char[][] Map() {
@@ -82,6 +92,25 @@ public class MapDesignAndPlayerMovement {
 			map1[i][map1.length - 1] = '#';
 		}
 		return map1;
+	}
+
+	public char[][] readMatrix() {
+		try (ObjectInputStream in = new ObjectInputStream(
+				new FileInputStream("/home/jquan18/UM/Y1S1/FOP_Valley2/resources/map/" + player.getloggedInPlayerName() + "_Map.dat"))) {
+			return (char[][]) in.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void saveMatrix(char[][] matrix) {
+		try (ObjectOutputStream out = new ObjectOutputStream(
+				new FileOutputStream("/home/jquan18/UM/Y1S1/FOP_Valley2/resources/map/" + player.getloggedInPlayerName() + "_Map.dat"))) {
+			out.writeObject(matrix);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void MapDisplay(char[][] map) {// Display map/print method
@@ -247,21 +276,19 @@ public class MapDesignAndPlayerMovement {
 	}
 
 	private void callBigMonsters() {
-		String[] m = {"Giant", "Witch", "Gargoyle"};
+		String[] m = { "Giant", "Witch", "Gargoyle" };
 		Random rand = new Random();
 		String chosenMonster = m[rand.nextInt(3)];
 		Monsters monsters = createMonster(chosenMonster);
-		monsters.printAttributes();
 		battleSystem battleSystem = new battleSystem(player, monsters);
 		battleSystem.startBattle();
 	}
 
 	private void callLittleMonsters() {
-		String[] m = {"Slime", "Spider", "Skeleton Warrior"};
+		String[] m = { "Slime", "Spider", "Skeleton Warrior" };
 		Random rand = new Random();
 		String chosenMonster = m[rand.nextInt(3)];
 		Monsters monsters = createMonster(chosenMonster);
-		monsters.printAttributes();
 		battleSystem battleSystem = new battleSystem(player, monsters);
 		battleSystem.startBattle();
 	}

@@ -154,36 +154,35 @@ public class Monsters {
 	public boolean isAlive() {
 		return healthPoints > 0;
 	}
-
 }
 
 class Slime extends Monsters {
 	public Slime() {
-		super("Slime", 50);
+		super("Slime",30);
 	}
 }
 
 class Spider extends Monsters {
 	public Spider() {
-		super("Spider", 55);
+		super("Spider", 40);
 	}
 }
 
 class Skeleton_Warrior extends Monsters {
 	public Skeleton_Warrior() {
-		super("Skeleton Warrior", 60);
+		super("Skeleton Warrior", 50);
 	}
 }
 
 class Giant extends Monsters {
 	public Giant() {
-		super("Giant", 65);
+		super("Giant", 60);
 	}
 }
 
 class Witch extends Monsters {
 	public Witch() {
-		super("Witch", 70);
+		super("Witch", 65);
 	}
 }
 
