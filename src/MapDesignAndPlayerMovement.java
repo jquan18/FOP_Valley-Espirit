@@ -155,26 +155,13 @@ public class MapDesignAndPlayerMovement {
 					}
 					if (map[a - 1][b] == 'M') {
 						System.out.println("Encountered a Big Monster at number " + (k + 1) + " movement.");
-						Monsters monsters = new Gargoyle();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
+						callBigMonsters();
 						a--;
 						break;
 					}
 					if (map[a - 1][b] == 'm') {
 						System.out.println("Encountered a Little Monster at number " + (k + 1) + " movement.");
-						// if (map[a][b] == 'm' || map[a][b] == 'M') {
-						// 	if (map[a][b] == 'm') {
-						// 		Monsters monsters = new Slime();
-						// 		battleSystem battleSystem = new battleSystem(player, monsters);
-						// 	} else {
-						// 		Monsters monsters = new Gargoyle();
-						// 		battleSystem battleSystem = new battleSystem(player, monsters);
-						// 	}
-						// }
-						Monsters monsters = new Slime();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
+						callLittleMonsters();
 						a--;
 						break;
 					}
@@ -189,17 +176,13 @@ public class MapDesignAndPlayerMovement {
 					}
 					if (map[a][b - 1] == 'M') {
 						System.out.println("Encountered a Big Monster at number " + (k + 1) + " movement.");
-						Monsters monsters = new Gargoyle();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
+						callBigMonsters();
 						b--;
 						break;
 					}
 					if (map[a][b - 1] == 'm') {
 						System.out.println("Encountered a Little Monster at number " + (k + 1) + " movement.");
-						Monsters monsters = new Slime();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
+						callLittleMonsters();
 						b--;
 						break;
 					}
@@ -214,17 +197,12 @@ public class MapDesignAndPlayerMovement {
 					}
 					if (map[a + 1][b] == 'M') {
 						System.out.println("Encountered a Big Monster at number " + (k + 1) + " movement.");
-						Monsters monsters = new Gargoyle();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
-						a++;
+						callBigMonsters();
 						break;
 					}
 					if (map[a + 1][b] == 'm') {
 						System.out.println("Encountered a Little Monster at number " + (k + 1) + " movement.");
-						Monsters monsters = new Slime();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
+						callLittleMonsters();
 						a++;
 						break;
 					}
@@ -239,17 +217,13 @@ public class MapDesignAndPlayerMovement {
 					}
 					if (map[a][b + 1] == 'M') {
 						System.out.println("Encountered a Big Monster at number " + (k + 1) + " movement.");
-						Monsters monsters = new Gargoyle();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
+						callBigMonsters();
 						b++;
 						break;
 					}
 					if (map[a][b + 1] == 'm') {
 						System.out.println("Encountered a Little Monster at number " + (k + 1) + " movement.");
-						Monsters monsters = new Slime();
-						battleSystem battleSystem = new battleSystem(player, monsters);
-						battleSystem.startBattle();
+						callLittleMonsters();
 						b++;
 						break;
 					}
@@ -272,4 +246,42 @@ public class MapDesignAndPlayerMovement {
 		return b;
 	}
 
+	private void callBigMonsters() {
+		String[] m = {"Giant", "Witch", "Gargoyle"};
+		Random rand = new Random();
+		String chosenMonster = m[rand.nextInt(3)];
+		Monsters monsters = createMonster(chosenMonster);
+		monsters.printAttributes();
+		battleSystem battleSystem = new battleSystem(player, monsters);
+		battleSystem.startBattle();
+	}
+
+	private void callLittleMonsters() {
+		String[] m = {"Slime", "Spider", "Skeleton Warrior"};
+		Random rand = new Random();
+		String chosenMonster = m[rand.nextInt(3)];
+		Monsters monsters = createMonster(chosenMonster);
+		monsters.printAttributes();
+		battleSystem battleSystem = new battleSystem(player, monsters);
+		battleSystem.startBattle();
+	}
+
+	private Monsters createMonster(String monsterName) {
+		switch (monsterName) {
+			case "Giant":
+				return new Giant();
+			case "Witch":
+				return new Witch();
+			case "Gargoyle":
+				return new Gargoyle();
+			case "Slime":
+				return new Slime();
+			case "Spider":
+				return new Spider();
+			case "Skeleton Warrior":
+				return new Skeleton_Warrior();
+			default:
+				return null;
+		}
+	}
 }

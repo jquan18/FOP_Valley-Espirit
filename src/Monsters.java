@@ -155,21 +155,6 @@ public class Monsters {
 		return healthPoints > 0;
 	}
 
-	public Monsters randomLittleMonsters() {
-		String[] m = {"Slime", "Spider", "Skeleton Warrior"};
-		Random rand = new Random();
-		String chonsen_Monster = m[rand.nextInt(3)];
-		Monsters chosenMonster = new Monsters(chonsen_Monster);
-		return chosenMonster;
-	}
-
-	public Monsters randomStrongerMonsters() {
-		String[] m = {"Giant", "Witch", "Gargoyle"};
-		Random rand = new Random();
-		String chonsen_Monster = m[rand.nextInt(3)];
-		Monsters chosenMonster = new Monsters(chonsen_Monster);
-		return chosenMonster;
-	}
 }
 
 class Slime extends Monsters {
