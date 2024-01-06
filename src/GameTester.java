@@ -26,22 +26,6 @@ public class GameTester {
             }
 
             if (player != null) {
-				// map.map_main();
-                // Monsters monsters = new Slime(); // Replace with actual monster instantiation
-				// battleSystem battleSystem = new battleSystem(player, monsters);
-
-				// // saveGame.loadPlayerProgress();
-				// battleSystem.startBattle();
-				// saveGame.savePlayerProgress(
-				// 		player.getArchetypeName(),
-				// 		player.getLevel(),
-				// 		player.getExperiencePoint(),
-				// 		player.gethealthPoints(),
-				// 		player.getmanaPoints(),
-				// 		map.getA(),
-				// 		map.getB()
-				// );
-
 				while (true) {
 					map.map_main(player);
 					System.out.println("Do you want to continue? (Y/N)");

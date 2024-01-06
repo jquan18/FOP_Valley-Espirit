@@ -101,7 +101,21 @@ public class Monsters {
 		if (player.playerDefense() == true)
 			damage = (int) (damage / 2);
 		player.playerDamaged(damage, attack_type);
+	}
 
+	public void monster_replenishMana() {
+		if (manaPoints == maxmanaPoints) {
+			;
+		}
+		else if (manaPoints < maxmanaPoints) {
+			int replenish = 3;
+			if ((manaPoints + replenish)>=maxmanaPoints) {
+				manaPoints = maxmanaPoints;
+			}
+			else if ((manaPoints + replenish)<maxmanaPoints) {
+				manaPoints += replenish;
+			}
+		}
 	}
 
 	public void displayMonstersStatus() {

@@ -44,15 +44,6 @@ class Player {
 	public Player(SaveGame saveGame) {
 		// Commented it out so can run without mysql
 		saveGame.loadPlayerProgress(); // Load the saved data
-		// System.out.println("Player Progress:");
-		// System.out.println("Name: " + saveGame.getName());
-		// System.out.println("Archetype: " + saveGame.getArchetypeName());
-		// System.out.println("Level: " + saveGame.getLevel());
-		// System.out.println("Experience Points: " + saveGame.getExperiencePoints());
-		// System.out.println("Health Points: " + saveGame.getHealthPoints());
-		// System.out.println("Mana Points: " + saveGame.getManaPoints());
-		// System.out.println("Location A: " + saveGame.getcurrentLocationA());
-		// System.out.println("Location B: " + saveGame.getcurrentLocationB());
 		loggedInPlayerName = saveGame.getName();
 		archetype = chooseArchetype(saveGame.getArchetypeName());
 		maxhealthPoints = (archetype.healthPoints * 10);
@@ -266,5 +257,20 @@ class Player {
 	}
 	public void decreaseManaPoints(int manaPoints) {
 		this.manaPoints -= manaPoints;
+	}
+
+	public void replenishMana() {
+		if (manaPoints == maxmanaPoints) {
+			;
+		}
+		else if (manaPoints < maxmanaPoints){
+			int replenish = 5;
+			if ((manaPoints + replenish)>=maxmanaPoints) {
+				manaPoints = maxmanaPoints;
+			}
+			else if ((manaPoints + replenish)<maxmanaPoints) {
+				manaPoints += replenish;
+			}
+		}
 	}
 }

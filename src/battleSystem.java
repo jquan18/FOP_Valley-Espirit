@@ -50,6 +50,8 @@ public class battleSystem {
 				break;
 			}
 			playerSpell.decreaseCooldowns();
+			player.replenishMana();
+			monsters.monster_replenishMana();
 		}
 		player.displayPlayerStatus();
 
@@ -67,6 +69,7 @@ public class battleSystem {
 
 		String choice = getUserChoice();
 
+		choice = choice.toUpperCase();
 		switch (choice) {
 			case "S1": {
 				player.playerAttack(monsters);
