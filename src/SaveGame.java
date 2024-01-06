@@ -22,20 +22,24 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class SaveGame {
-	protected int level;
+	protected String loggedInPlayerName;
+	protected String archetypeName;
 	protected int healthPoints;
 	protected int manaPoints;
+	protected int level;
+	protected int experiencePoints;
 	protected int currentLocationA;
 	protected int currentLocationB;
 
 	private Connection connection;
 	private boolean isLoggedIn;
-	private String loggedInPlayerName;
+	private boolean isNewRegistered;
 	private Scanner sc = new Scanner(System.in);
 
 	// Constructor establish connection to MySQL database
 	public SaveGame() {
 		isLoggedIn = false;
+		isNewRegistered = false;
 		loggedInPlayerName = null;
 		connectToDatabase();
 	}
@@ -65,6 +69,7 @@ public class SaveGame {
 		switch (choice) {
 			case 1: // Register
 				registerUser();
+				isNewRegistered = true;
 				break;
 			case 2: // Login
 				loginUser();
@@ -166,18 +171,19 @@ public class SaveGame {
 	}
 
 	// Save game progress for the logged-in player
-	public boolean savePlayerProgress(int level, int healthPoints, int manaPoints, int currentLocationA,
-			int currentLocationB) {
+	public boolean savePlayerProgress(String archetypeName, int level, int experiencePoints, int healthPoints, int manaPoints, int currentLocationA, int currentLocationB) {
 		if (isLoggedIn) { // Check if user is logged in
 			try {
-				String query = "REPLACE INTO player_progress (player_name, level, health_points, mana_points, current_location_a, current_location_b) VALUES (?, ?, ?, ?, ?, ?)";
+				String query = "REPLACE INTO player_progress (player_name, archetype_name, level, experience_points, health_points, mana_points, current_location_a, current_location_b) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, loggedInPlayerName);
-				preparedStatement.setInt(2, level);
-				preparedStatement.setInt(3, healthPoints);
-				preparedStatement.setInt(4, manaPoints);
-				preparedStatement.setInt(5, currentLocationA);
-				preparedStatement.setInt(6, currentLocationB);
+				preparedStatement.setString(2, archetypeName);
+				preparedStatement.setInt(3, level);
+				preparedStatement.setInt(4, experiencePoints);
+				preparedStatement.setInt(5, healthPoints);
+				preparedStatement.setInt(6, manaPoints);
+				preparedStatement.setInt(7, currentLocationA);
+				preparedStatement.setInt(8, currentLocationB);
 
 				preparedStatement.executeUpdate();
 				return true;
@@ -193,6 +199,7 @@ public class SaveGame {
 
 	// Method load game progress for a player
 	public boolean loadPlayerProgress() {
+		System.out.println("isloggedin: " + isLoggedIn);
 		if (isLoggedIn) {
 			try {
 				String query = "SELECT * FROM player_progress WHERE player_name = ?";
@@ -203,7 +210,9 @@ public class SaveGame {
 
 				if (resultSet.next()) {
 					// Retrieve player progress from the result set
+					archetypeName = resultSet.getString("archetype_name");
 					level = resultSet.getInt("level");
+					experiencePoints = resultSet.getInt("experience_points");
 					healthPoints = resultSet.getInt("health_points");
 					manaPoints = resultSet.getInt("mana_points");
 					currentLocationA = resultSet.getInt("current_location_a");
@@ -223,27 +232,27 @@ public class SaveGame {
 	}
 
 	// Reset player progress
-	public void resetPlayerProgress() {
-		if (isLoggedIn) {
-			try {
-				String query = "REPLACE INTO player_progress (player_name, level, health_points, mana_points, current_location_a, current_location_b) VALUES (?, ?, ?, ?, ?, ?)";
-				PreparedStatement preparedStatement = connection.prepareStatement(query);
-				preparedStatement.setString(1, loggedInPlayerName);
-				preparedStatement.setInt(2, 1);
-				preparedStatement.setInt(3, 100);
-				preparedStatement.setInt(4, 100);
-				preparedStatement.setInt(5, 1);
-				preparedStatement.setInt(6, 20);
+	// public void resetPlayerProgress() {
+	// 	if (isLoggedIn) {
+	// 		try {
+	// 			String query = "REPLACE INTO player_progress (player_name, level, health_points, mana_points, current_location_a, current_location_b) VALUES (?, ?, ?, ?, ?, ?)";
+	// 			PreparedStatement preparedStatement = connection.prepareStatement(query);
+	// 			preparedStatement.setString(1, loggedInPlayerName);
+	// 			preparedStatement.setInt(2, 1);
+	// 			preparedStatement.setInt(3, 100);
+	// 			preparedStatement.setInt(4, 100);
+	// 			preparedStatement.setInt(5, 1);
+	// 			preparedStatement.setInt(6, 20);
 
-				preparedStatement.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("Error: Unable to reset player progress.");
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("Please log in to reset player progress.");
-		}
-	}
+	// 			preparedStatement.executeUpdate();
+	// 		} catch (SQLException e) {
+	// 			System.out.println("Error: Unable to reset player progress.");
+	// 			e.printStackTrace();
+	// 		}
+	// 	} else {
+	// 		System.out.println("Please log in to reset player progress.");
+	// 	}
+	// }
 
 	// Close the connection when done
 	public void closeConnection() {
@@ -262,8 +271,16 @@ public class SaveGame {
 		return loggedInPlayerName;
 	}
 
+	public String getArchetypeName() {
+		return archetypeName;
+	}
+
 	public int getLevel() {
 		return level;
+	}
+
+	public int getExperiencePoints() {
+		return experiencePoints;
 	}
 
 	public int getHealthPoints() {
@@ -280,5 +297,13 @@ public class SaveGame {
 
 	public int getcurrentLocationB() {
 		return currentLocationB;
+	}
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public boolean isNewRegistered() {
+		return isNewRegistered;
 	}
 }

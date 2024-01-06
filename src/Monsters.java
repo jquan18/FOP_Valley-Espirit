@@ -1,5 +1,4 @@
 package Y1S1.FOP_Valley2.src;
-//Monsters spell undone
 
 import java.util.*;
 
@@ -10,6 +9,9 @@ public class Monsters {
 	int physicalDefense, magicalDefense;
 	int physicalAttack, magicalAttack;
 
+	public Monsters (String name) {
+		this.name = name;
+	}
 	public Monsters(String name, int totalPoints) {
 		this.name = name;
 		distributePoints(totalPoints);
@@ -78,8 +80,9 @@ public class Monsters {
 			attack_type = "Magical";
 		}
 		int damage = new Random().nextInt(11) * (attack_value / 10);
-		if (player.playerDefense() == true)
+		if (player.playerDefense() == true) {
 			damage = (int) (damage / 2);
+		}
 		player.playerDamaged(damage, attack_type);
 
 	}
@@ -152,6 +155,21 @@ public class Monsters {
 		return healthPoints > 0;
 	}
 
+	public Monsters randomLittleMonsters() {
+		String[] m = {"Slime", "Spider", "Skeleton Warrior"};
+		Random rand = new Random();
+		String chonsen_Monster = m[rand.nextInt(3)];
+		Monsters chosenMonster = new Monsters(chonsen_Monster);
+		return chosenMonster;
+	}
+
+	public Monsters randomStrongerMonsters() {
+		String[] m = {"Giant", "Witch", "Gargoyle"};
+		Random rand = new Random();
+		String chonsen_Monster = m[rand.nextInt(3)];
+		Monsters chosenMonster = new Monsters(chonsen_Monster);
+		return chosenMonster;
+	}
 }
 
 class Slime extends Monsters {

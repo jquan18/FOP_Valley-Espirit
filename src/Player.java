@@ -21,39 +21,51 @@ class Player {
 	private boolean keepStay;
 
 
-	private SaveGame saveGame = new SaveGame();
+	private SaveGame saveGame;
 	private PlayerSpell playerSpell;
 
-	public Player(boolean loadFromSaveGame, String playerName, String chosenArchetype) {
-		if (loadFromSaveGame) {
-			// Commented it out so can run without mysql
-			// saveGame.loadSavedData(); // Load the saved data
+	// Constructor for creating a new player
+	public Player(String playerName, String chosenArchetype) {
+		loggedInPlayerName = playerName;
+		archetype = chooseArchetype(chosenArchetype);
+		maxhealthPoints = (archetype.healthPoints * 10);
+		healthPoints = maxhealthPoints;
+		maxmanaPoints = (archetype.manaPoints * 10);
+		manaPoints = maxmanaPoints;
+		physicalAttack = archetype.physicalAttack;
+		magicalAttack = archetype.magicalAttack;
+		physicalDefense = archetype.physicalDefense;
+		magicalDefense = archetype.magicalDefense;
+		defending = false;
+		experiencePoints = 0;
+		level = 1;
+	}
 
-			// loggedInPlayerName = saveGame.getName();
-			// maxhealthPoints = saveGame.getHealthPoints();
-			// healthPoints = maxhealthPoints;
-			// maxmanaPoints = saveGame.getManaPoints();
-			// manaPoints = maxmanaPoints;
-			// defense = saveGame.getDefense();
-			// defending = false;
-			// experiencePoints = saveGame.getExperiencePoints();
-
-			// archetype = chooseArchetype(saveGame.getArchetypeName());
-		} else {
-			loggedInPlayerName = playerName;
-			archetype = chooseArchetype(chosenArchetype);
-			maxhealthPoints = (archetype.healthPoints * 10);
-			healthPoints = maxhealthPoints;
-			maxmanaPoints = (archetype.manaPoints * 10);
-			manaPoints = maxmanaPoints;
-			physicalAttack = archetype.physicalAttack;
-			magicalAttack = archetype.magicalAttack;
-			physicalDefense = archetype.physicalDefense;
-			magicalDefense = archetype.magicalDefense;
-			defending = false;
-			experiencePoints = 0;
-			level = 1;
-		}
+	public Player(SaveGame saveGame) {
+		// Commented it out so can run without mysql
+		saveGame.loadPlayerProgress(); // Load the saved data
+		// System.out.println("Player Progress:");
+		// System.out.println("Name: " + saveGame.getName());
+		// System.out.println("Archetype: " + saveGame.getArchetypeName());
+		// System.out.println("Level: " + saveGame.getLevel());
+		// System.out.println("Experience Points: " + saveGame.getExperiencePoints());
+		// System.out.println("Health Points: " + saveGame.getHealthPoints());
+		// System.out.println("Mana Points: " + saveGame.getManaPoints());
+		// System.out.println("Location A: " + saveGame.getcurrentLocationA());
+		// System.out.println("Location B: " + saveGame.getcurrentLocationB());
+		loggedInPlayerName = saveGame.getName();
+		archetype = chooseArchetype(saveGame.getArchetypeName());
+		maxhealthPoints = (archetype.healthPoints * 10);
+		healthPoints = saveGame.getHealthPoints();
+		maxmanaPoints = (archetype.manaPoints * 10);
+		manaPoints = saveGame.getManaPoints();
+		physicalAttack = archetype.physicalAttack;
+		magicalAttack = archetype.magicalAttack;
+		physicalDefense = archetype.physicalDefense;
+		magicalDefense = archetype.magicalDefense;
+		defending = false;
+		experiencePoints = saveGame.getExperiencePoints();
+		level = saveGame.getLevel();
 	}
 
 	// Method to set the archetype based on the archetype name
@@ -127,9 +139,16 @@ class Player {
 	}
 
 	public void playerHeal(int amount) {
-		this.healthPoints += amount;
-		if (this.healthPoints > maxhealthPoints) {
-			this.healthPoints = maxhealthPoints;
+		int current_mana = getmanaPoints();
+		if ((current_mana - 10)>=0) {
+			decreaseManaPoints(current_mana - (current_mana-10));
+			this.healthPoints += amount;
+			if (this.healthPoints > maxhealthPoints) {
+				this.healthPoints = maxhealthPoints;
+			}
+		}
+		else {
+			System.out.println("You have not enought mana.");
 		}
 	}
 
