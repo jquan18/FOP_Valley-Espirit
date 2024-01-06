@@ -5,19 +5,20 @@ import java.util.*;
 
 class LevelSystem {
 	int[] RequiredEXP = new int[35];
-	int currentEXP = 0, previousLevel = 0, currentLevel = 0;
+	int currentEXP, previousLevel, currentLevel;
 	int firstSpell = 1, secondSpell = 1; // Chance of player to learn spell
 	int chance_upgrade = 4;
 	int new_point = 0;
 	private Player player;
 
 	public LevelSystem(Player player) {
-		RequieredEXP();
+		RequiredEXP();
 		this.player = player;
-
+		currentEXP = player.getExperiencePoint();
+		currentLevel = player.getLevel();
 	}
 
-	public void RequieredEXP() {
+	public void RequiredEXP() {
 		for (int i = 0, j = 5; i < RequiredEXP.length; i++) {
 			if (j >= 300) { // 20 EXP point in 31-35 level
 				RequiredEXP[i] = j;
@@ -38,20 +39,22 @@ class LevelSystem {
 	public void addEXP(int EXP) {
 		System.out.println("You earn " + EXP + " EXP points");
 		currentEXP += EXP;
+		player.addExperiencePoint(currentEXP);
 		LevelUp();
 	}
 
 	public void LevelUp() {
 		int i = 0;
 		previousLevel = currentLevel;
-		while (currentEXP > RequiredEXP[i]) {
+		while (i < RequiredEXP.length && currentEXP > RequiredEXP[i]) {
 			currentLevel = i + 1;
 			i++;
 		}
+		player.setLevel(i + 1);
 		System.out.println("You are Level " + (i + 1) + " now");
 		Extra_Points();
 		System.out.println("");
-		Unlock_Spell();
+		// Unlock_Spell();
 	}
 
 	public void Unlock_Spell() {

@@ -227,6 +227,7 @@ public class MapDesignAndPlayerMovement {
 					if (map[a + 1][b] == 'M') {
 						System.out.println("Encountered a Big Monster at number " + (k + 1) + " movement.");
 						callBigMonsters();
+						a++;
 						break;
 					}
 					if (map[a + 1][b] == 'm') {

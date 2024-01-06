@@ -39,6 +39,7 @@ class Player {
 		defending = false;
 		experiencePoints = 0;
 		level = 1;
+		displayPlayerAttributes();
 	}
 
 	public Player(SaveGame saveGame) {
@@ -57,6 +58,7 @@ class Player {
 		defending = false;
 		experiencePoints = saveGame.getExperiencePoints();
 		level = saveGame.getLevel();
+		displayPlayerAttributes();
 	}
 
 	// Method to set the archetype based on the archetype name
@@ -172,12 +174,14 @@ class Player {
 	}
 
 	public void displayPlayerAttributes() {
-		System.out.println("\nhealtPoints : " + getMaxhealthPoints());
-		System.out.println("manaPoints : " + getMaxmanaPoints());
+		System.out.println("\nhealtPoints : " + healthPoints);
+		System.out.println("manaPoints : " + manaPoints);
 		System.out.println("physicalAttack : " + getphysicalAttack());
 		System.out.println("magicalAttack : " + getmagicalAttack());
 		System.out.println("physicalDefense : " + getphysicalDefense());
 		System.out.println("magicalDefense : " + getmagicalDefense());
+		System.out.println("level : " + getLevel());
+		System.out.println("experiencePoints : " + getExperiencePoint());
 	}
 
 	public String getHpBar() {
@@ -222,6 +226,11 @@ class Player {
 	public int getLevel() {
 		return level;
 	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	public String getArchetypeName() {
 		return archetype.getClass().getSimpleName().toLowerCase();
 	}
@@ -237,23 +246,32 @@ class Player {
 	public int getExperiencePoint() {
 		return experiencePoints;
 	}
+
+	public void addExperiencePoint(int experiencePoints) {
+		this.experiencePoints += experiencePoints;
+	}
+
 	public void levelupHealthPoints() {
-		maxhealthPoints++;
+		if (healthPoints < maxhealthPoints) {
+			healthPoints += 5;
+		}
 	}
 	public void levelupManaPoints() {
-		maxmanaPoints++;
+		if (manaPoints < maxmanaPoints) {
+			manaPoints += 5;
+		}
 	}
 	public void levelupPhysicalDefense() {
-		physicalDefense++;
+		physicalDefense += 5;
 	}
 	public void levelupMagicalDefense() {
-		magicalDefense++;
+		magicalDefense += 5;
 	}
 	public void levelupPhysicalAttack() {
-		physicalAttack++;
+		physicalAttack += 5;
 	}
 	public void levelupMagicalAttack() {
-		magicalAttack++;
+		magicalAttack += 5;
 	}
 	public void decreaseManaPoints(int manaPoints) {
 		this.manaPoints -= manaPoints;
