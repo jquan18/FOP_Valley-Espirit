@@ -18,15 +18,10 @@ public class PlayerSpell {
 		this.monsters = monsters;
 	}
 
-	public void startSpell() {
-		Scanner input = new Scanner(System.in);
+	public boolean startSpell() {
 		// Load spells based on player archetype upon initialization
 		loadSpells(player.getArchetypeName());
-		System.out.println("You have 3 spells to choose from.");
-		displaySpellChoices();
-		System.out.println("Enter the spell number you want to use: ");
-		int spellIndex = input.nextInt();
-		castSpell(spellIndex, monsters);
+		return displaySpellChoices();
 	}
 
 	private void loadSpells(String playerArchetype) {
@@ -54,21 +49,41 @@ public class PlayerSpell {
 		}
 	}
 
-	public void displaySpellChoices() {
-		System.out.println("Spell Choices: ");
+	public boolean displaySpellChoices() {
+		Scanner input = new Scanner(System.in);
+		int manaPoints = player.getmanaPoints();
+		int level = player.getLevel();
+
+		System.out.println("You have 3 spells to choose from.");
 		for (int i = 0; i < 3; i++) {
-			if (spellName[i] != null) {
+			if (spellName[i] != null && level >= levelRequired[i] && cooldownCheck(i + 1)
+					&& manaPoints >= getManaCost(i + 1)) {
+				System.out.println("Spell Choices: ");
 				System.out.println("Spell Number " + (i + 1) + ":");
 				System.out.println("Spell Name: " + spellName[i]);
 				System.out.println("Level Required: " + levelRequired[i]);
 				System.out.println("Spell Description: " + spellDescription[i]);
 				System.out.println("Cooldown: " + cdTurn[i]);
-				System.out.println();
+
+				System.out.println("Enter the spell number you want to use: \n");
+				int spellIndex = input.nextInt();
+
+				return castSpell(spellIndex, monsters);
+			} else if (level < levelRequired[i]) {
+				System.out.println("Spell " + (i + 1) + " unlock at level " + levelRequired[i] + ".");
+			} else if (!cooldownCheck(i + 1)) {
+				System.out.println(
+						"Spell " + (i + 1) + " is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.");
+			} else if (manaPoints < getManaCost(i + 1)) {
+				System.out.println("You do not have enough mana to use spell " + (i + 1) + ".");
+			} else {
+				System.out.println("No spells available.");
 			}
 		}
+		return false;
 	}
 
-	public void castSpell(int spellIndex, Monsters monster) {
+	public boolean castSpell(int spellIndex, Monsters monster) {
 		int manaPoints = player.getmanaPoints();
 		int level = player.getLevel();
 
@@ -80,12 +95,14 @@ public class PlayerSpell {
 				System.out.println("You dealt " + damage + " damage to the monster!");
 				startCooldown(spellIndex, cdTurn[index]);
 				player.decreaseManaPoints(getManaCost(spellIndex));
+				return true;
 			} else {
 				System.out.println("You are not high enough level or the spell is on cooldown or you lack mana.");
 			}
 		} else {
 			System.out.println("Invalid spell choice.");
 		}
+		return false;
 	}
 
 	private int getManaCost(int spellIndex) {

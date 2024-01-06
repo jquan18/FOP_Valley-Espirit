@@ -94,7 +94,9 @@ public class battleSystem {
 			}
 
 			case "S5": {
-				playerSpell.startSpell();
+				if (!playerSpell.startSpell()) {
+					playerTurn();
+				}
 				break;
 			}
 
@@ -140,7 +142,7 @@ public class battleSystem {
 		for (int i=0; i<monsters_type.length; i++) {
 			if (monsters.equalsIgnoreCase(monsters_type[i])) {
 				String currentWorkingDir = System.getProperty("user.dir");
-				String relativePath = currentWorkingDir + "/Assignment/Monster_Image/ASCII_Formal/" + monsters_type[i] +".txt";
+				String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/ASCII_Formal/" + monsters_type[i] +".txt";
 				try {
 					Scanner reader = new Scanner(new FileInputStream(relativePath));
 					while (reader.hasNextLine()) {

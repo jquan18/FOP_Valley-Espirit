@@ -5,50 +5,49 @@ import java.util.Scanner;
 public class GameTester {
 
 	public static void main(String[] args) {
-        SaveGame saveGame = new SaveGame();
-        Scanner scanner = new Scanner(System.in);
+		SaveGame saveGame = new SaveGame();
+		Scanner scanner = new Scanner(System.in);
 
-        if (!saveGame.isLoggedIn()) {
+		if (!saveGame.isLoggedIn()) {
 			saveGame.promptRegisterLogin(); // Prompt for registration or login
-        }
+		}
 
-        if (saveGame.isLoggedIn()) {
+		if (saveGame.isLoggedIn()) {
 			Player player = null;
 			MapDesignAndPlayerMovement map = null;
-            if (!saveGame.isNewRegistered()) {
+			if (!saveGame.isNewRegistered()) {
 				// Existing player
 				player = new Player(saveGame);
 				map = new MapDesignAndPlayerMovement(saveGame.getcurrentLocationA(), saveGame.getcurrentLocationB());
 			} else {
 				// New player
-                player = createPlayer(scanner);
+				player = createPlayer(scanner);
 				map = new MapDesignAndPlayerMovement(1, 20);
-            }
+			}
 
-            if (player != null) {
+			if (player != null) {
 				while (true) {
 					map.map_main(player);
 					System.out.println("Do you want to continue? (Y/N)");
 					if (scanner.nextLine().equalsIgnoreCase("N")) {
 						saveGame.savePlayerProgress(
-							player.getArchetypeName(),
-							player.getLevel(),
-							player.getExperiencePoint(),
-							player.gethealthPoints(),
-							player.getmanaPoints(),
-							map.getA(),
-							map.getB()
-						);
+								player.getArchetypeName(),
+								player.getLevel(),
+								player.getExperiencePoint(),
+								player.gethealthPoints(),
+								player.getmanaPoints(),
+								map.getA(),
+								map.getB());
 						break;
 					}
 				}
 				saveGame.closeConnection();
 
-            }
-        } else {
-            System.out.println("Login failed. Exiting the game.");
-        }
-    }
+			}
+		} else {
+			System.out.println("Login failed. Exiting the game.");
+		}
+	}
 
 	private static Player createPlayer(Scanner scanner) {
 		System.out.println("Enter player name: ");
