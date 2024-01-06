@@ -99,8 +99,13 @@ class Player {
 		}
 		if (damage>0) {
 			int realDamage = damage - ((defense_type/10) * new Random().nextInt(8));
-			healthPoints = Math.max(0, healthPoints - realDamage);
-			System.out.println("You were attacked by Monster for " + realDamage + " damage");
+			if (realDamage>0) {
+				healthPoints = Math.max(0, healthPoints - realDamage);
+				System.out.println("You were attacked by Monster for " + realDamage + " damage");
+			}
+			else {
+				System.out.println("Perfect defence. You didn't take any damage");
+			}
 		}
 		else {
 			System.out.println("Perfect defence. You didn't take any damage");
