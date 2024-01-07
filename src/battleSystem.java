@@ -72,6 +72,7 @@ public class battleSystem {
 	}
 
 	public void playerTurn() {
+		player.displayPlayerAttributes();
 		player.playerPutDownDefend();
 		System.out.println("Its your turn");
 
@@ -140,10 +141,14 @@ public class battleSystem {
 			System.out.println("Monster Rest");
 		}
 		else if (choice == 2) {
-			System.out.println("Monster use Spell");
-			monsters.monstersSpell(player);
+			if (monsters.getManaPoints()>=15) {
+				System.out.println("Monster use Spell");
+				monsters.monstersSpell(player);
+				monsters.decreaseManaPoints();
+			}
+			else
+				monsters.monstersAttack(player);
 		}
-
 	}
 
 	public void displayBattleStatus() {

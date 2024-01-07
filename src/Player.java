@@ -32,13 +32,13 @@ class Player {
 		healthPoints = maxhealthPoints;
 		maxmanaPoints = (archetype.manaPoints * 10);
 		manaPoints = maxmanaPoints;
-		physicalAttack = archetype.physicalAttack * 5;
+		physicalAttack = archetype.physicalAttack;
 		magicalAttack = archetype.magicalAttack;
 		physicalDefense = archetype.physicalDefense;
 		magicalDefense = archetype.magicalDefense;
 		defending = false;
 		experiencePoints = 0;
-		level = 100;
+		level = 1;
 		displayPlayerAttributes();
 	}
 
@@ -251,17 +251,19 @@ class Player {
 	}
 
 	public void levelupHealthPoints() {
-		if (healthPoints < maxhealthPoints) {
-			healthPoints += 10;
+		int tmp = maxhealthPoints - healthPoints;
+		if ((healthPoints + 10)>=maxhealthPoints) {
+			healthPoints += tmp;
 		} else {
-			maxhealthPoints += 10;
+			healthPoints += 10;
 		}
 	}
 	public void levelupManaPoints() {
-		if (manaPoints < maxmanaPoints) {
-			manaPoints += 10;
+		int tmp = maxmanaPoints - manaPoints;
+		if ((manaPoints + 10)>=maxmanaPoints) {
+			manaPoints = tmp;
 		} else {
-			maxmanaPoints += 10;
+			manaPoints += 10;
 		}
 	}
 	public void levelupPhysicalDefense() {
@@ -298,13 +300,15 @@ class Player {
 
 	/*Spell Effect */
 	public void stealPoints() {
-		manaPoints += 20;
-		healthPoints += 10;
-		if (manaPoints > maxmanaPoints) {
+		if (manaPoints >= maxmanaPoints) {
 			manaPoints = maxmanaPoints;
+		} else {
+			manaPoints += 20;
 		}
-		if (healthPoints > maxhealthPoints) {
+		if (healthPoints >= maxhealthPoints) {
 			manaPoints = maxhealthPoints;
+		} else {
+			healthPoints += 10;
 		}
 	}
 	private int RoaringTime;
@@ -402,22 +406,4 @@ class Player {
 		public void causeAbsoluteTreatmen() {
 			healthPoints = maxhealthPoints;
 		}
-
-	public void fullBlow() {
-		physicalAttack *= 3;
-	}
-	public void replenishMana() {
-		if (manaPoints == maxmanaPoints) {
-			;
-		}
-		else if (manaPoints < maxmanaPoints){
-			int replenish = 5;
-			if ((manaPoints + replenish)>=maxmanaPoints) {
-				manaPoints = maxmanaPoints;
-			}
-			else if ((manaPoints + replenish)<maxmanaPoints) {
-				manaPoints += replenish;
-			}
-		}
-	}
 }

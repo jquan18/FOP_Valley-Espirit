@@ -8,7 +8,7 @@ public class Text_Info {
 	public void get_Cover() {
 
 		String currentWorkingDir = System.getProperty("user.dir");
-		String relativePath = currentWorkingDir + "/Assignment/rsc/Cover.txt";
+		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/Cover.txt";
 
 		try {
 			Scanner reader = new Scanner(new FileInputStream(relativePath));
@@ -25,7 +25,7 @@ public class Text_Info {
 	public void get_Select_Archetypes() {
 
 		String currentWorkingDir = System.getProperty("user.dir");
-		String relativePath = currentWorkingDir + "/Assignment/rsc/Select_Archetypes.txt";
+		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/Select_Archetypes.txt";
 
 		try {
 			Scanner reader = new Scanner(new FileInputStream(relativePath));
@@ -43,7 +43,7 @@ public class Text_Info {
 		String currentWorkingDir = System.getProperty("user.dir");
 		String[] archetype = { "Archer_Info.txt", "Paladin_Info.txt", "Warrior_Info.txt", "Mage_Info.txt",
 				"Rogue_Info.txt" };
-		String relativePath = currentWorkingDir + "/Assignment/rsc/" + archetype[num - 1];
+		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/" + archetype[num - 1];
 		try {
 			Scanner reader = new Scanner(new FileInputStream(relativePath));
 			while (reader.hasNextLine()) {

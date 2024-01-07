@@ -172,6 +172,10 @@ public class Monsters {
 		return healthPoints > 0;
 	}
 
+	public void decreaseManaPoints() {
+		manaPoints -= 15;
+	}
+
 	/*For Spell function */
 	public void monstersEffect() {
 		if (flaming == true && flamingTime>0) {//More than one round
@@ -180,6 +184,11 @@ public class Monsters {
 			flamingTime--;
 			System.out.println("Monster is taking fire damage, "+damage+" damage");
 		}
+	}
+	public void fullBlow() {
+		int damage = 50 + new Random().nextInt(50);
+		healthPoints -= damage;
+		System.out.println("Monsters is attacked by full bow arrow with "+ damage + " damage.");
 	}
 
 	public void causeRealDamage() {
@@ -194,8 +203,20 @@ public class Monsters {
 	}
 
 	public void stealPoints() {
-		healthPoints -= 10;
-		manaPoints -= 20;
+
+		if (healthPoints<10) {
+			healthPoints = 0;
+		}
+		else {
+			healthPoints -= 10;
+		}
+
+		if (manaPoints < 20) {
+			manaPoints = 0;
+		}
+		else {
+			manaPoints -= 20;
+		}
 	}
 
 
@@ -208,11 +229,14 @@ public class Monsters {
 	}
 
 	public void joinGame() {
+		System.out.println("Starting gambling with monster.");
 		int destiny = new Random().nextInt(5);
 		int man = new Random().nextInt(5);
 		if (destiny == man) {
+			System.out.println("You win!");
 			healthPoints = 0;
 		}
+		System.out.println("You lose!");
 	}
 
 	public void clearPoints() {
@@ -221,8 +245,9 @@ public class Monsters {
 	}
 
 	public void controlDamage() {
-		int damage = new Random().nextInt(20)+10;
-		int total = damage * (physicalAttack/10);
+		int damage = new Random().nextInt(20) + 10;
+		int total = damage * (new Random().nextInt(3) + 1);
+		this.healthPoints -= total;
 		System.out.println("The monster attacked itself and causing " + total + " damage.");
 	}
 	/*End */
@@ -231,36 +256,36 @@ public class Monsters {
 
 class Slime extends Monsters {
 	public Slime() {
-		super("Slime",30);
+		super("Slime",40);
 	}
 }
 
 class Spider extends Monsters {
 	public Spider() {
-		super("Spider", 40);
+		super("Spider", 50);
 	}
 }
 
 class Skeleton_Warrior extends Monsters {
 	public Skeleton_Warrior() {
-		super("Skeleton Warrior", 50);
+		super("Skeleton Warrior", 60);
 	}
 }
 
 class Giant extends Monsters {
 	public Giant() {
-		super("Giant", 60);
+		super("Giant", 70);
 	}
 }
 
 class Witch extends Monsters {
 	public Witch() {
-		super("Witch", 65);
+		super("Witch", 80);
 	}
 }
 
 class Gargoyle extends Monsters {
 	public Gargoyle() {
-		super("Gargoyle", 75);
+		super("Gargoyle", 100);
 	}
 }

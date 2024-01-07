@@ -174,7 +174,7 @@ public class PlayerSpell {
 				monsters.flameEffect();
 				break;
 
-			case "Steal":
+			case "Stealing":
 				monsters.stealPoints();
 				player.stealPoints();
 				break;
@@ -210,7 +210,7 @@ public class PlayerSpell {
 				player.InvincibilityEffect();
 				break;
 
-			case "Teatment":
+			case "Treatment":
 				player.causeAbsoluteTreatmen();
 				break;
 
@@ -237,7 +237,7 @@ public class PlayerSpell {
 				break;
 
 			case "Full_blow":
-				player.fullBlow();
+				monsters.fullBlow();
 				break;
 
 			default:

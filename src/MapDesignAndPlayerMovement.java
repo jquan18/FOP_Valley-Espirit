@@ -99,7 +99,7 @@ public class MapDesignAndPlayerMovement {
 				new FileInputStream("/home/jquan18/UM/Y1S1/FOP_Valley2/resources/map/" + player.getloggedInPlayerName() + "_Map.dat"))) {
 			return (char[][]) in.readObject();
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("Creating new map.....");
 		}
 		return null;
 	}

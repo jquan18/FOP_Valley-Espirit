@@ -17,7 +17,7 @@ public class Archetypes {
 
 class Archer extends Archetypes {
 	public Archer() {
-		super(15, 15, 12, 5, 18, 5);
+		super(15, 15, 9, 3, 18, 5);
 	}
 
 }
@@ -42,6 +42,6 @@ class Mage extends Archetypes {
 
 class Rogue extends Archetypes {
 	public Rogue() {
-		super(10, 10, 13, 13, 22, 2);
+		super(10, 10, 13, 13, 20, 4);
 	}
 }

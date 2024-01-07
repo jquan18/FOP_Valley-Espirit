@@ -39,7 +39,7 @@ class LevelSystem {
 	public void addEXP(int EXP) {
 		System.out.println("You earn " + EXP + " EXP points");
 		currentEXP += EXP;
-		player.addExperiencePoint(currentEXP);
+		player.addExperiencePoint(EXP);
 		LevelUp();
 	}
 
