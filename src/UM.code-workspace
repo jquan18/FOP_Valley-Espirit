@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "UM",
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"java.debug.settings.onBuildFailureProceed": true,
+		"java.project.referencedLibraries": [
+			"lib/**/*.jar",
+			"/home/jquan18/Download/mysql-connector-j-8.2.0.jar"
+		]
+	}
+}

@@ -11,22 +11,30 @@ public class battleSystem {
 	private Monsters monsters;
 	private PlayerSpell playerSpell;
 	private LevelSystem playerLevel;
+	private int roundsToSkip = 0;
 
 	public battleSystem(Player player, Monsters monsters) {
 		this.player = player;
 		this.monsters = monsters;
-		this.playerSpell = new PlayerSpell(player, monsters);
+		this.playerSpell = new PlayerSpell(player, monsters, this);
 		playerLevel = new LevelSystem(this.player);
 	}
 
+	public void setSkipRound(int round) {
+		this.roundsToSkip = round;
+	}
+
 	public void startBattle() {
+		player.setPlayerKeepStay(true);
 		System.out.println("Battle starts between " + player.getloggedInPlayerName() + " and " + monsters.getName());
 		String[] m = {"Slime", "Spider", "Skeleton Warrior"};
 		String[] M = {"Giant", "Witch", "Gargoyle"};
-		while (player.isAlive() && monsters.isAlive() && player.player_keepStay()) {
+		while (player.isAlive() && monsters.isAlive() && player.getPlayerKeepStay()) {
+
 			displayMonsterImage(monsters.getName());
 			displayBattleStatus();
 
+			player.playerEffect();
 			playerTurn();
 			if (!monsters.isAlive()) {
 				System.out.println("You defeated " + monsters.getName());
@@ -44,7 +52,13 @@ public class battleSystem {
 				break;
 			}
 
-			monstersTurn();
+			if (roundsToSkip == 0) {
+				monsters.monstersEffect();
+				monstersTurn();
+			} else if (roundsToSkip > 0) {
+				roundsToSkip--;
+			}
+
 			if (!player.isAlive()) {
 				System.out.println("You are defeated by " + monsters.getName());
 				break;

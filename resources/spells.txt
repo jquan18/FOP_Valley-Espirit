@@ -1,75 +1,75 @@
 warrior
+Earthquake
+5
+Slam the ground, causing a shockwave that knocks back enemies and interrupts their abilities.
+4
+warrior
 Roaring
 10
 Unleashes a powerful attack, dealing heavy damage to the target
-4
-warrior
-Earthquake
-20
-Slam the ground, causing a shockwave that knocks back enemies and interrupts their abilities.
 5
 warrior
-Antifragile
-30
-The Warrior creates a barrier with their shield, nullify damage for 1 round
+Hemophile
+20
+Warrior's physicalAttack, physicalDefense and healthPoints increase continuously. [5 round]
 6
 mage
 Fireball
-10
+5
 Hurls a fiery projectile at the target, dealing moderate fire damage.
 4
 mage
-Huatuo
-20
-Emits a healing aura, restoring the healthPoints to oneself and nearby allies.
+Absolute_Treatment
+10
+Blood levels are back to optimum.
 5
 mage
 Frozen
-30
-Releases a burst of frost,freezing nearbyu enemies in place for 10 seconds
+20
+Releases a burst of frost,freezing enemies in place for 4 round.
 6
 rogue
-Rapid
-10
-Rague can moves instantaneous to another location.
-4
-rogue
-Backstab
-20
-Rague can snakes behind the target, delivering a devastating backstab,causing extra damge for enemy.
+Stealing
+5
+Rague can steal the manaPoints and healthPoints from enemies.
 5
 rogue
-Copycat
-30
-Ragur can copy an ability of any archetype and use for one round.
+Gamblers
+10
+Rague can gamble with destiny, the loser goes straight to death.
+4
+rogue
+Control
+20
+Manoeuvre the enemies to attack themselves
 6
 paladin
 Justice
-10
-Samshes the target with Justice Hammer and stuns the target for 10 seconds.
+5
+Samshes the target with Justice Hammer and stuns the target for 2 round.
 4
 paladin
-Fellowship
-20
-Creates a protective barrier the Paladin,rendering them immune to damage for 2 .
+Invincibility
+10
+Creates a protective barrier the Paladin,rendering them immune to damage for 2 round .
 5
 paladin
 God
-30
-Interrupt the replenish of manaPoints of the monster
+20
+Forcibly removes all the manaPoints and half of the healthPoints from enemies.
 6
 archer
-Shot
-10
+Multishot
+5
 Fires a flurry of arrows at the targer dealing moderate damage.
 4
 archer
-Anna
-20
-Shoots an arrow imbued with frost,slowing down the movemet and attack speed of the target for 15 seconds
+Treatment
+10
+Blood levels are back to optimum.
 5
 archer
-Rain
-30
-Fires a rain of arrows at a wide area and damage all the target in the area
+Full_blow
+20
+Shoots an arrow that deals 300% of your current physical attack.
 6

@@ -5,8 +5,7 @@ public class Archetypes {
 	int physicalDefense, magicalDefense;
 	int physicalAttack, magicalAttack;
 
-	public Archetypes(int healthPoints, int manaPoints, int physicalDefense, int magicalDefense, int physicalAttack,
-			int magicalAttack) {
+	public Archetypes(int healthPoints, int manaPoints, int physicalDefense, int magicalDefense, int physicalAttack, int magicalAttack) {
 		this.healthPoints = healthPoints;
 		this.manaPoints = manaPoints;
 		this.physicalDefense = physicalDefense;

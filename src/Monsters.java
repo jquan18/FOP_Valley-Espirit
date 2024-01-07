@@ -9,6 +9,9 @@ public class Monsters {
 	int physicalDefense, magicalDefense;
 	int physicalAttack, magicalAttack;
 
+	private boolean flaming = false;
+	private int flamingTime = 0;
+
 	public Monsters (String name) {
 		this.name = name;
 	}
@@ -168,6 +171,62 @@ public class Monsters {
 	public boolean isAlive() {
 		return healthPoints > 0;
 	}
+
+	/*For Spell function */
+	public void monstersEffect() {
+		if (flaming == true && flamingTime>0) {//More than one round
+			int damage = new Random().nextInt(7)+5;
+			healthPoints -= damage;
+			flamingTime--;
+			System.out.println("Monster is taking fire damage, "+damage+" damage");
+		}
+	}
+
+	public void causeRealDamage() {
+		int realDamage = new Random().nextInt(25)+20;
+		healthPoints -= realDamage;
+		System.out.println("Monsters was plunged into the ground and take " + realDamage + " of damage!");
+	}
+
+	public void flameEffect() {
+		flaming = true;
+		flamingTime = 3;
+	}
+
+	public void stealPoints() {
+		healthPoints -= 10;
+		manaPoints -= 20;
+	}
+
+
+	public void multiShot() {
+		for (int i=0; i<5; i++) {
+			int damage = new Random().nextInt(8);
+			healthPoints -= damage;
+			System.out.println("Monsters take " + damage + " damage from arrows");
+		}
+	}
+
+	public void joinGame() {
+		int destiny = new Random().nextInt(5);
+		int man = new Random().nextInt(5);
+		if (destiny == man) {
+			healthPoints = 0;
+		}
+	}
+
+	public void clearPoints() {
+		healthPoints /= 2;
+		manaPoints = 0;
+	}
+
+	public void controlDamage() {
+		int damage = new Random().nextInt(20)+10;
+		int total = damage * (physicalAttack/10);
+		System.out.println("The monster attacked itself and causing " + total + " damage.");
+	}
+	/*End */
+
 }
 
 class Slime extends Monsters {

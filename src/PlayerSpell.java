@@ -12,10 +12,12 @@ public class PlayerSpell {
 
 	private Player player;
 	private Monsters monsters;
+	private battleSystem battle;
 
-	public PlayerSpell(Player player, Monsters monsters) {
+	public PlayerSpell(Player player, Monsters monsters, battleSystem battle) {
 		this.player = player;
 		this.monsters = monsters;
+		this.battle = battle;
 	}
 
 	public boolean startSpell() {
@@ -26,7 +28,10 @@ public class PlayerSpell {
 
 	private void loadSpells(String playerArchetype) {
 		try {
-			Scanner reader = new Scanner(new FileInputStream("/home/jquan18/UM/Y1S1/FOP_Valley2/resources/spells.txt"));
+			String currentWorkingDir = System.getProperty("user.dir");
+			String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/spells.txt";
+			Scanner reader = new Scanner(new FileInputStream(relativePath));
+
 			int i = 0;
 			while (reader.hasNextLine()) {
 				String line = reader.nextLine();
@@ -53,32 +58,37 @@ public class PlayerSpell {
 		Scanner input = new Scanner(System.in);
 		int manaPoints = player.getmanaPoints();
 		int level = player.getLevel();
+		boolean gotSpell = false;
 
-		System.out.println("You have 3 spells to choose from.");
+		System.out.println("<< Spell Choice >>");
 		for (int i = 0; i < 3; i++) {
-			if (spellName[i] != null && level >= levelRequired[i] && cooldownCheck(i + 1)
-					&& manaPoints >= getManaCost(i + 1)) {
-				System.out.println("Spell Choices: ");
-				System.out.println("Spell Number " + (i + 1) + ":");
-				System.out.println("Spell Name: " + spellName[i]);
-				System.out.println("Level Required: " + levelRequired[i]);
+			if (spellName[i] != null && level >= levelRequired[i] && cooldownCheck(i + 1) && manaPoints >= getManaCost(i + 1)) {
+
+				System.out.println();
+				System.out.println("[" + (i + 1) + "] :" + spellName[i]);
 				System.out.println("Spell Description: " + spellDescription[i]);
 				System.out.println("Cooldown: " + cdTurn[i]);
+				System.out.println();
 
+				gotSpell = true;
 			} else if (level < levelRequired[i]) {
-				System.out.println("Spell " + (i + 1) + " unlock at level " + levelRequired[i] + ".");
+				System.out.println("[" + (i + 1) + "] unlock at level " + levelRequired[i] + ".");
 			} else if (!cooldownCheck(i + 1)) {
 				System.out.println(
-					"Spell " + (i + 1) + " is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.");
-				} else if (manaPoints < getManaCost(i + 1)) {
-					System.out.println("You do not have enough mana to use spell " + (i + 1) + ".");
-				} else {
-					System.out.println("No spells available.");
-				}
+						"[" + (i + 1) + "] is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.");
+			} else if (manaPoints < getManaCost(i + 1)) {
+				System.out.println("You do not have enough mana to use spell [A" + (i + 1) + "] .");
+			} else {
+				System.out.println("No spells available for this archetypequit.");
 			}
-			System.out.println("Enter the spell number you want to use: \n");
+		}
+		if (gotSpell) {
+			System.out.println("Enter the spell you want to use: \n");
 			int spellIndex = input.nextInt();
 			return castSpell(spellIndex, monsters);
+		} else {
+			return false;
+		}
 	}
 
 	public boolean castSpell(int spellIndex, Monsters monster) {
@@ -88,9 +98,21 @@ public class PlayerSpell {
 		if (spellIndex >= 1 && spellIndex <= 3) {
 			int index = spellIndex - 1;
 			if (level >= levelRequired[index] && cooldownCheck(spellIndex) && manaPoints >= getManaCost(spellIndex)) {
-				int damage = calculateSpellDamage(spellIndex, monster);
+				// int damage = calculateSpellDamage(spellIndex, monster);
+				switch (spellIndex) {
+					case 1:
+						firstSpell();
+						break;
+					case 2:
+						secondSpell();
+						break;
+					case 3:
+						thirdSpell();
+						break;
+					default:
+						break;
+				}
 				System.out.println("You used spell " + spellName[index] + "!");
-				System.out.println("You dealt " + damage + " damage to the monster!");
 				startCooldown(spellIndex, cdTurn[index]);
 				player.decreaseManaPoints(getManaCost(spellIndex));
 				return true;
@@ -113,15 +135,6 @@ public class PlayerSpell {
 		}
 	}
 
-	private int calculateSpellDamage(int spellIndex, Monsters monster) {
-		int damage = 0;
-		int numberOfAttacks = spellIndex == 1 ? 2 : (spellIndex == 2 ? 5 : 8);
-		for (int i = 0; i < numberOfAttacks; i++) {
-			damage += player.playerAttack(monster);
-		}
-		return damage;
-	}
-
 	private boolean cooldownCheck(int spellIndex) {
 		return spellCooldowns[spellIndex - 1] == 0;
 	}
@@ -135,6 +148,100 @@ public class PlayerSpell {
 			if (spellCooldowns[i] > 0) {
 				spellCooldowns[i]--;
 			}
+		}
+	}
+
+	// Spell:
+	public String getFirstSpellName() {
+		return spellName[0];
+	}
+
+	public String getSecondSpellName() {
+		return spellName[1];
+	}
+
+	public String getThirdSpellName() {
+		return spellName[2];
+	}
+
+	public void firstSpell() {
+		switch (spellName[0]) {
+			case "Earthquake":
+				monsters.causeRealDamage();
+				break;
+
+			case "Fireball":
+				monsters.flameEffect();
+				break;
+
+			case "Steal":
+				monsters.stealPoints();
+				player.stealPoints();
+				break;
+
+			case "Justice":
+				battle.setSkipRound(3);
+				break;
+
+			case "Multishot":
+				monsters.multiShot();
+				break;
+
+			default:
+				System.out.println("Error 1");
+		}
+	}
+
+	public void secondSpell() {
+		switch (spellName[1]) {
+			case "Roaring":
+				player.roaringEffect();
+				break;
+
+			case "Absolute_Treatment":
+				player.causeAbsoluteTreatmen();
+				break;
+
+			case "Gamblers":
+				monsters.joinGame();
+				break;
+
+			case "Invincibility":
+				player.InvincibilityEffect();
+				break;
+
+			case "Teatment":
+				player.causeAbsoluteTreatmen();
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	public void thirdSpell() {
+		switch (spellName[2]) {
+			case "Hemophile":
+				player.HemophileEffect();
+				break;
+			case "Frozen":
+				battle.setSkipRound(5);
+				System.out.println("Monster is frozen, unable to act[4 round]");
+				break;
+			case "Control":
+				monsters.controlDamage();
+				break;
+
+			case "God":
+				monsters.clearPoints();
+				break;
+
+			case "Full_blow":
+				player.fullBlow();
+				break;
+
+			default:
+				break;
 		}
 	}
 }

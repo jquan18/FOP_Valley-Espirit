@@ -18,7 +18,7 @@ class Player {
 	private int experiencePoints;
 	private int level;
 	private Archetypes archetype;
-	private boolean keepStay;
+	private boolean keepStay = true;
 
 
 	private SaveGame saveGame;
@@ -32,13 +32,13 @@ class Player {
 		healthPoints = maxhealthPoints;
 		maxmanaPoints = (archetype.manaPoints * 10);
 		manaPoints = maxmanaPoints;
-		physicalAttack = archetype.physicalAttack;
+		physicalAttack = archetype.physicalAttack * 5;
 		magicalAttack = archetype.magicalAttack;
 		physicalDefense = archetype.physicalDefense;
 		magicalDefense = archetype.magicalDefense;
 		defending = false;
 		experiencePoints = 0;
-		level = 1;
+		level = 100;
 		displayPlayerAttributes();
 	}
 
@@ -121,11 +121,6 @@ class Player {
 		return damage;
 	}
 
-	public void playerSpell(Monsters monsters) {
-		this.playerSpell = new PlayerSpell(this, monsters);
-		this.playerSpell.startSpell();
-	}
-
 	public void playerDefending() {
 		defending = true;
 	}
@@ -150,10 +145,6 @@ class Player {
 		}
 	}
 
-	public boolean player_keepStay() {
-		keepStay = true;
-		return keepStay;
-	}
 	public void tryEscaped() {
 		Random rand = new Random();
 		int chance = rand.nextInt(2);
@@ -163,8 +154,16 @@ class Player {
 		}
 		else {
 			System.out.println("Failed to escape");
-
 		}
+	}
+
+	public boolean getPlayerKeepStay() {
+		// keepStay = true;
+		return this.keepStay;
+	}
+
+	public void setPlayerKeepStay(boolean k) {
+		this.keepStay = k;
 	}
 
 	public void displayPlayerStatus() {
@@ -253,30 +252,160 @@ class Player {
 
 	public void levelupHealthPoints() {
 		if (healthPoints < maxhealthPoints) {
-			healthPoints += 5;
+			healthPoints += 10;
+		} else {
+			maxhealthPoints += 10;
 		}
 	}
 	public void levelupManaPoints() {
 		if (manaPoints < maxmanaPoints) {
-			manaPoints += 5;
+			manaPoints += 10;
+		} else {
+			maxmanaPoints += 10;
 		}
 	}
 	public void levelupPhysicalDefense() {
-		physicalDefense += 5;
+		physicalDefense += 2;
 	}
 	public void levelupMagicalDefense() {
-		magicalDefense += 5;
+		magicalDefense += 2;
 	}
 	public void levelupPhysicalAttack() {
-		physicalAttack += 5;
+		physicalAttack += 2;
 	}
 	public void levelupMagicalAttack() {
-		magicalAttack += 5;
+		magicalAttack += 2;
 	}
 	public void decreaseManaPoints(int manaPoints) {
 		this.manaPoints -= manaPoints;
 	}
 
+	public void replenishMana() {
+		if (manaPoints == maxmanaPoints) {
+			return;
+		}
+		else if (manaPoints < maxmanaPoints){
+			int replenish = 2;
+			if ((manaPoints + replenish)>=maxmanaPoints) {
+				manaPoints = maxmanaPoints;
+			}
+			else if ((manaPoints + replenish)<maxmanaPoints) {
+				manaPoints += replenish;
+			}
+		}
+
+	}
+
+	/*Spell Effect */
+	public void stealPoints() {
+		manaPoints += 20;
+		healthPoints += 10;
+		if (manaPoints > maxmanaPoints) {
+			manaPoints = maxmanaPoints;
+		}
+		if (healthPoints > maxhealthPoints) {
+			manaPoints = maxhealthPoints;
+		}
+	}
+	private int RoaringTime;
+	private boolean Roaring=false;
+	private boolean Invincibility=false;
+	private int InvincibilityTime;
+	private boolean Hemophile=false;
+	private int HemophileTime;
+
+	public void playerEffect() {
+		if (Roaring == true) {
+			if (RoaringTime == 2) {
+				physicalAttack *= 2;
+			}
+			else if (RoaringTime == 1) {
+				;
+			}
+			else if (RoaringTime == 0) {
+				physicalAttack /= 2;
+				roaringEnd();
+				System.out.println("Roaring Effect End");
+			}
+			RoaringTime--;
+		}
+
+		if (Invincibility == true) {
+			if (InvincibilityTime == 2) {
+				physicalDefense *= 10;
+				magicalDefense *= 10;
+			}
+			else if (InvincibilityTime == 1) {
+				;
+			}
+			else if (InvincibilityTime == 0) {
+				physicalDefense /= 10;
+				magicalDefense /= 10;
+				InvincibilityEnd();
+				System.out.println("Invincibility Effect End");
+			}
+			InvincibilityTime--;
+		}
+
+		if (Hemophile == true) {
+			if (HemophileTime == 5) {
+				physicalAttack += 4;
+				physicalDefense += 4;
+				healthPoints += 15;
+				if (healthPoints>maxhealthPoints)
+				healthPoints = maxhealthPoints;
+			}
+			else if (HemophileTime == 4 || HemophileTime == 3 || HemophileTime == 2 || HemophileTime == 1) {
+				physicalAttack += 4;
+				physicalDefense += 4;
+				healthPoints += 15;
+				if (healthPoints>maxhealthPoints)
+				healthPoints = maxhealthPoints;
+			}
+			else if (HemophileTime == 0) {
+				physicalAttack -= 20;
+				physicalDefense -= 20;
+				System.out.println("Hemophile Effect End");
+				}
+				HemophileTime--;
+			}
+		}
+
+		public void roaringEffect() {
+			System.out.println("Player's physical damage increases dramatically[2 round] ");
+			Roaring = true;
+			RoaringTime = 2;
+		}
+		public void roaringEnd() {
+			Roaring = false;
+		}
+
+		public void InvincibilityEffect() {
+			System.out.println("You will not receive any damaged now[2 round]");
+			Invincibility = true;
+			InvincibilityTime = 2;
+		}
+		public void InvincibilityEnd() {
+			Invincibility = false;
+		}
+
+		public void HemophileEffect() {
+			System.out.println("Player's physicalAttack, physicalDefense, healthPoints increase continuously[5 round]");
+			Hemophile = true;
+			HemophileTime = 5;
+		}
+		public void HemophileEnd() {
+			Hemophile = false;
+		}
+
+
+		public void causeAbsoluteTreatmen() {
+			healthPoints = maxhealthPoints;
+		}
+
+	public void fullBlow() {
+		physicalAttack *= 3;
+	}
 	public void replenishMana() {
 		if (manaPoints == maxmanaPoints) {
 			;

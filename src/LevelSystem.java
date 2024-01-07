@@ -20,18 +20,18 @@ class LevelSystem {
 
 	public void RequiredEXP() {
 		for (int i = 0, j = 5; i < RequiredEXP.length; i++) {
-			if (j >= 300) { // 20 EXP point in 31-35 level
+			if (j >= 600) { // 20 EXP point in 31-35 level
+				RequiredEXP[i] = j;
+				j += 40;
+			} else if (j >= 300) {// 15 EXP ponit in 21-30 level
+				RequiredEXP[i] = j;
+				j += 30;
+			} else if (j >= 100) { // 10 EXP point in 11-20 level
 				RequiredEXP[i] = j;
 				j += 20;
-			} else if (j >= 150) {// 15 EXP ponit in 21-30 level
-				RequiredEXP[i] = j;
-				j += 15;
-			} else if (j >= 50) { // 10 EXP point in 11-20 level
-				RequiredEXP[i] = j;
-				j += 10;
 			} else { // only need 5 EXP point to upgrade level in 1-10 level
 				RequiredEXP[i] = j;
-				j += 5;
+				j += 10;
 			}
 		}
 	}
