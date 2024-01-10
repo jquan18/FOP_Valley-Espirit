@@ -1,73 +1,48 @@
 package Y1S1.FOP_Valley2.src;
-
 import java.util.Scanner;
+
+
+// Dont forget to change file path in Text_Info.java
+// Dont forget to change file path in PlayerSpell.java
+// Dont forget to change file path in battleSystem.java
 
 public class GameTester {
 
 	public static void main(String[] args) {
 		Text_Info s1 = new Text_Info();
-		SaveGame saveGame = new SaveGame();
 		Scanner scanner = new Scanner(System.in);
 
 		s1.get_Cover();
-		if (!saveGame.isLoggedIn()) {
-			saveGame.promptRegisterLogin(); // Prompt for registration or login
-		}
+		Player player = createPlayer();
+		MapDesignAndPlayerMovement map = new MapDesignAndPlayerMovement(1, 20);
 
-		if (saveGame.isLoggedIn()) {
-			Player player = null;
-			MapDesignAndPlayerMovement map = null;
-			if (!saveGame.isNewRegistered()) {
-				// Existing player
-				player = new Player(saveGame);
-				map = new MapDesignAndPlayerMovement(saveGame.getcurrentLocationA(), saveGame.getcurrentLocationB());
-			} else {
-				// New player
-				player = createPlayer(saveGame);
-				map = new MapDesignAndPlayerMovement(1, 20);
-			}
-
-			if (player != null) {
-				while (true) {
-					map.map_main(player);
-					System.out.println("Do you want to continue? (Y/N)");
-					if (scanner.nextLine().equalsIgnoreCase("N")) {
-						saveGame.savePlayerProgress(
-								player.getArchetypeName(),
-								player.getLevel(),
-								player.getExperiencePoint(),
-								player.gethealthPoints(),
-								player.getmanaPoints(),
-								map.getA(),
-								map.getB());
-						break;
-					}
+		if (player != null) {
+			while (true) {
+				map.map_main(player);
+				System.out.println("Do you want to continue? (Y/N)");
+				if (scanner.nextLine().equalsIgnoreCase("N")) {
+					System.out.println("Bye bye");
+					break;
 				}
-				saveGame.closeConnection();
-
 			}
 		} else {
 			System.out.println("Login failed. Exiting the game.");
 		}
 	}
 
-	private static Player createPlayer(SaveGame saveGame) {
+	private static Player createPlayer() {
 		Scanner sc = new Scanner(System.in);
 		Text_Info s1 = new Text_Info();
-		// System.out.println("Enter play-+
-		er name: ");
-		// String playerName = sc.nextLine();
-		String playerName = saveGame.getName();
+		System.out.println("Enter player name: ");
+		String playerName = sc.nextLine();
 		String player_archetype = "";
 
 		String verify = "NO";
 		while (true) {
-			// Initial game interface
-			// Should print a cover image of the adventure game
-			// Archetype Selection
 			s1.get_Select_Archetypes();
 			System.out.print("Enter : ");
 			int arche = sc.nextInt();
+
 			if (arche < 1 || arche > 5) {
 				System.out.println("Invalid Input.");
 			} else {

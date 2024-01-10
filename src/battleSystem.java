@@ -72,7 +72,6 @@ public class battleSystem {
 	}
 
 	public void playerTurn() {
-		player.displayPlayerAttributes();
 		player.playerPutDownDefend();
 		System.out.println("Its your turn");
 
@@ -117,12 +116,14 @@ public class battleSystem {
 
 			default:
 				System.out.println("Invalid Choice");
+				System.out.println("Please enter again\n");
+				playerTurn();
 		}
 	}
 
 	public String getUserChoice() {
 		Scanner keyboard = new Scanner(System.in);
-		System.out.println("Enter your choice: ");
+		System.out.print("Enter your choice: ");
 		String choice = keyboard.next();
 		return choice;
 

@@ -83,8 +83,16 @@ public class PlayerSpell {
 			}
 		}
 		if (gotSpell) {
-			System.out.println("Enter the spell you want to use: \n");
-			int spellIndex = input.nextInt();
+			int spellIndex;
+			while (true) {
+				System.out.println("Enter the spell you want to use: \n");
+				spellIndex = input.nextInt();
+				if (spellIndex >= 1 && spellIndex <= 3) {
+					return castSpell(spellIndex, monsters);
+				} else {
+					System.out.println("Invalid spell choice.");
+				}
+			}
 			return castSpell(spellIndex, monsters);
 		} else {
 			return false;

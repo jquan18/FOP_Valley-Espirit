@@ -39,7 +39,7 @@ class Player {
 		defending = false;
 		experiencePoints = 0;
 		level = 1;
-		displayPlayerAttributes();
+		// displayPlayerAttributes();
 	}
 
 	public Player(SaveGame saveGame) {
@@ -58,7 +58,7 @@ class Player {
 		defending = false;
 		experiencePoints = saveGame.getExperiencePoints();
 		level = saveGame.getLevel();
-		displayPlayerAttributes();
+		// displayPlayerAttributes();
 	}
 
 	// Method to set the archetype based on the archetype name
