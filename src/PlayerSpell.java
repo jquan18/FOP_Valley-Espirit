@@ -65,21 +65,21 @@ public class PlayerSpell {
 			if (spellName[i] != null && level >= levelRequired[i] && cooldownCheck(i + 1) && manaPoints >= getManaCost(i + 1)) {
 				// Here green color from line 68 to 70
 				System.out.println();
-				System.out.println("[" + (i + 1) + "] :" + spellName[i]);
+				System.out.println("\033[0;32m[" + (i + 1) + "] :" + spellName[i]);//Change to green
 				System.out.println("Spell Description: " + spellDescription[i]);
-				System.out.println("Cooldown: " + cdTurn[i]);
+				System.out.println("Cooldown: " + cdTurn[i]+"\033[0m");//reset text at the end
 				System.out.println();
 
 				gotSpell = true;
 			} else if (level < levelRequired[i]) {
 				// Here red color
-				System.out.println("[" + (i + 1) + "] unlock at level " + levelRequired[i] + ".");
+				System.out.println("\033[0;31m[" + (i + 1) + "] unlock at level " + levelRequired[i] + ".\033[0m");
 			} else if (!cooldownCheck(i + 1)) {
 				// Here blue color
-				System.out.println("[" + (i + 1) + "] is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.");
+				System.out.println("\033[0;34m[" + (i + 1) + "] is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.\033[0m");
 			} else if (manaPoints < getManaCost(i + 1)) {
 				// Here yellow color
-				System.out.println("You do not have enough mana to use spell [A" + (i + 1) + "] .");
+				System.out.println("\033[0;33mYou do not have enough mana to use spell [A" + (i + 1) + "] .\033[0m");
 			} else {
 				System.out.println("No spells available for this archetype.");
 			}
