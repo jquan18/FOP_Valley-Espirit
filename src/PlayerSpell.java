@@ -63,7 +63,7 @@ public class PlayerSpell {
 		System.out.println("<< Spell Choice >>");
 		for (int i = 0; i < 3; i++) {
 			if (spellName[i] != null && level >= levelRequired[i] && cooldownCheck(i + 1) && manaPoints >= getManaCost(i + 1)) {
-
+				// Here green color from line 68 to 70
 				System.out.println();
 				System.out.println("[" + (i + 1) + "] :" + spellName[i]);
 				System.out.println("Spell Description: " + spellDescription[i]);
@@ -72,16 +72,19 @@ public class PlayerSpell {
 
 				gotSpell = true;
 			} else if (level < levelRequired[i]) {
+				// Here red color
 				System.out.println("[" + (i + 1) + "] unlock at level " + levelRequired[i] + ".");
 			} else if (!cooldownCheck(i + 1)) {
-				System.out.println(
-						"[" + (i + 1) + "] is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.");
+				// Here blue color
+				System.out.println("[" + (i + 1) + "] is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.");
 			} else if (manaPoints < getManaCost(i + 1)) {
+				// Here yellow color
 				System.out.println("You do not have enough mana to use spell [A" + (i + 1) + "] .");
 			} else {
-				System.out.println("No spells available for this archetypequit.");
+				System.out.println("No spells available for this archetype.");
 			}
 		}
+
 		if (gotSpell) {
 			int spellIndex;
 			while (true) {
@@ -93,10 +96,8 @@ public class PlayerSpell {
 					System.out.println("Invalid spell choice.");
 				}
 			}
-			return castSpell(spellIndex, monsters);
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	public boolean castSpell(int spellIndex, Monsters monster) {
