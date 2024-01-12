@@ -82,16 +82,16 @@ public class SaveGame {
 	// Method overloading to register a new user
 	public void registerUser() {
 		while (true) {
-			System.out.println("Please enter your username: ");
+			System.out.print("Please enter your username: ");
 			String username = sc.next();
-			System.out.println("Please enter your password: ");
+			System.out.print("\nPlease enter your password: ");
 			String password = sc.next();
 
 			if (registerUser(username, password)) {
-				System.out.println("User registered successfully.");
+				System.out.println("\nUser registered successfully.");
 				break;
 			} else {
-				System.out.println("Do you want to try again? (Y/N)");
+				System.out.println("\nDo you want to try again? (Y/N)");
 				char choice = sc.next().charAt(0);
 				if (choice == 'N') {
 					break;
@@ -125,16 +125,16 @@ public class SaveGame {
 	// Method overloading to login an existing user
 	public void loginUser() {
 		while (true) {
-			System.out.println("Please enter your username: ");
+			System.out.print("\nPlease enter your username: ");
 			String username = sc.next();
-			System.out.println("Please enter your password: ");
+			System.out.print("\nPlease enter your password: ");
 			String password = sc.next();
 
 			if (loginUser(username, password)) {
-				System.out.println("User logged in successfully.");
+				System.out.println("\nUser logged in successfully.");
 				break;
 			} else {
-				System.out.println("Do you want to try again? (Y/N)");
+				System.out.println("\nDo you want to try again? (Y/N)");
 				char choice = sc.next().charAt(0);
 				if (choice == 'N') {
 					break;
@@ -229,6 +229,23 @@ public class SaveGame {
 			System.out.println("Please log in to load player progress.");
 		}
 		return false;
+	}
+
+	public void deletePlayerUsername() {
+		if (isLoggedIn) {
+			try {
+				String query = "DELETE FROM players WHERE player_name = ?";
+				PreparedStatement preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, loggedInPlayerName);
+
+				preparedStatement.executeUpdate();
+			} catch (SQLException e) {
+				System.out.println("Error: Unable to delete player username.");
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Please log in to delete player username.");
+		}
 	}
 
 	// Reset player progress

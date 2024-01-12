@@ -289,3 +289,9 @@ class Gargoyle extends Monsters {
 		super("Gargoyle", 100);
 	}
 }
+
+class Dragon extends Monsters {
+	public Dragon() {
+		super("Dragon", 200);
+	}
+}

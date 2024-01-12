@@ -12,6 +12,7 @@ public class battleSystem {
 	private PlayerSpell playerSpell;
 	private LevelSystem playerLevel;
 	private int roundsToSkip = 0;
+	private TextInfo textInfo = new TextInfo();
 
 	public battleSystem(Player player, Monsters monsters) {
 		this.player = player;
@@ -61,14 +62,16 @@ public class battleSystem {
 
 			if (!player.isAlive()) {
 				System.out.println("You are defeated by " + monsters.getName());
+				textInfo.printLoseStory(player.getloggedInPlayerName());
 				break;
 			}
 			playerSpell.decreaseCooldowns();
 			player.replenishMana();
 			monsters.monster_replenishMana();
 		}
-		player.displayPlayerStatus();
-
+		if (player.isAlive()) {
+			player.displayPlayerStatus();
+		}
 	}
 
 	public void playerTurn() {

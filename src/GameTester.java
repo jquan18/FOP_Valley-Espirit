@@ -2,17 +2,20 @@ package Y1S1.FOP_Valley2.src;
 import java.util.Scanner;
 
 
-// Dont forget to change file path in Text_Info.java
+// Dont forget to change file path in TextInfo.java
 // Dont forget to change file path in PlayerSpell.java
 // Dont forget to change file path in battleSystem.java
 
 public class GameTester {
 
 	public static void main(String[] args) {
-		Text_Info s1 = new Text_Info();
+		TextInfo s1 = new TextInfo();
 		Scanner scanner = new Scanner(System.in);
 
 		s1.get_Cover();
+		s1.startPrintStory();
+		System.out.println("\nPress any key to continue...");
+		scanner.nextLine();
 		Player player = createPlayer();
 		MapDesignAndPlayerMovement map = new MapDesignAndPlayerMovement(1, 20);
 
@@ -32,7 +35,7 @@ public class GameTester {
 
 	private static Player createPlayer() {
 		Scanner sc = new Scanner(System.in);
-		Text_Info s1 = new Text_Info();
+		TextInfo s1 = new TextInfo();
 		System.out.println("Enter player name: ");
 		String playerName = sc.nextLine();
 		String player_archetype = "";

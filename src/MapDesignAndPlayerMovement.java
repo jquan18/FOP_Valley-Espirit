@@ -11,15 +11,12 @@ import java.util.Scanner;
 
 public class MapDesignAndPlayerMovement {
 
-	// public static int a = 1, b = 20;// P location, a row, b column
-	// public static final String ANSI_RESET = "\u001B[0m";
-	// public static final String ANSI_RED = "\u001B[31m";
-
 	private int a, b;// P location, a row, b column
 	private final String ANSI_RESET = "\u001B[0m";
 	private final String ANSI_RED = "\u001B[31m";
 
 	private Player player;
+	private TextInfo textInfo = new TextInfo();
 
 	public MapDesignAndPlayerMovement(int a, int b) {
 		this.a = a;
@@ -80,6 +77,12 @@ public class MapDesignAndPlayerMovement {
 						map1[i][j] = '=';
 					}
 				}
+				if (i == 38) {
+					map1[i][j] = ' ';
+					if (j == 20 || j == 21) {
+						map1[i][j] = 'D';
+					}
+				}
 
 				if (i == 39) {
 					map1[i][j] = '#';
@@ -137,18 +140,25 @@ public class MapDesignAndPlayerMovement {
 
 		System.out.println("-------------------------------------------------------------------------------");
 		System.out.println("  W\nA S D   to move the character\n" +
-				"-------------------------------------------------------------------------------" +
-				"\nW: Move Up One Square" +
-				"\nA: Move Left One Square" +
-				"\nS: Move Down One Square" +
-				"\nD: Move Right One Square\n" +
-				"-------------------------------------------------------------------------------" +
-				"\nP is your current location");
+		"-------------------------------------------------------------------------------" +
+		"\nW: Move Up One Square" +
+		"\nA: Move Left One Square" +
+		"\nS: Move Down One Square" +
+		"\nD: Move Right One Square\n" +
+		"-------------------------------------------------------------------------------" +
+		"\nP is your current location");
 
 		do {// Loop for receiving user movement input.
 			n++;
 
+			// Check if player is dead
+			if (!player.isAlive()) {
+				break;
+			}
+
 			do {// verifying the input validation
+
+
 				System.out.print("-------------------------------------------------------------------------------\n" +
 						"Enter the movement instruction(Enter quit to quit): ");
 				movement = scanner.nextLine().toLowerCase();
@@ -163,8 +173,7 @@ public class MapDesignAndPlayerMovement {
 					char ch = movement.charAt(m);
 					if ("wasd".indexOf(ch) == -1) {
 						judge = true;
-						System.out.println(
-								"There are wrong characters in your input. Accepted input character(W,A,S,D,quit)");
+						System.out.println("There are wrong characters in your input. Accepted input character(W,A,S,D,quit)");
 						break;
 					}
 				}
@@ -194,6 +203,12 @@ public class MapDesignAndPlayerMovement {
 						a--;
 						break;
 					}
+					if (map[a - 1][b] == 'D') {
+						System.out.println("Encountered Boss Monster at number " + (k + 1) + " movement.");
+						callBossMonster();
+						a--;
+						break;
+					}
 					map[a][b] = ' ';
 					a--;
 				}
@@ -213,6 +228,12 @@ public class MapDesignAndPlayerMovement {
 						System.out.println("Encountered a Little Monster at number " + (k + 1) + " movement.");
 						callLittleMonsters();
 						b--;
+						break;
+					}
+					if (map[a][b - 1] == 'D') {
+						System.out.println("Encountered Boss Monster at number " + (k + 1) + " movement.");
+						callBossMonster();
+						a--;
 						break;
 					}
 					map[a][b] = ' ';
@@ -236,6 +257,12 @@ public class MapDesignAndPlayerMovement {
 						a++;
 						break;
 					}
+					if (map[a + 1][b] == 'D') {
+						System.out.println("Encountered Boss Monster at number " + (k + 1) + " movement.");
+						callBossMonster();
+						a--;
+						break;
+					}
 					map[a][b] = ' ';
 					a++;
 				}
@@ -257,14 +284,26 @@ public class MapDesignAndPlayerMovement {
 						b++;
 						break;
 					}
+					if (map[a][b + 1] == 'D') {
+						System.out.println("Encountered Boss Monster at number " + (k + 1) + " movement.");
+						callBossMonster();
+						a--;
+						break;
+					}
 					map[a][b] = ' ';
 					b++;
 				}
 			}
-			System.out.println("Now, player is at row " + (a + 1) + " column " + (b + 1));
-			System.out.println(
-					"================================= Map after " + n + " movement =================================");
-			MapDisplay(map);
+			if (a == 39 && (b == 20 || b == 21)) {
+				textInfo.printWinStory();
+				break;
+			}
+			if (player.isAlive()) {
+				System.out.println("Now, player is at row " + (a + 1) + " column " + (b + 1));
+				System.out.println(
+						"================================= Map after " + n + " movement =================================");
+				MapDisplay(map);
+			}
 		} while (true);
 	}
 
@@ -274,6 +313,12 @@ public class MapDesignAndPlayerMovement {
 
 	public int getB() {
 		return b;
+	}
+
+	private void callBossMonster() {
+		Monsters monsters = new Dragon();
+		battleSystem battleSystem = new battleSystem(player, monsters);
+		battleSystem.startBattle();
 	}
 
 	private void callBigMonsters() {

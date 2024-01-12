@@ -47,7 +47,7 @@ class Player {
 		saveGame.loadPlayerProgress(); // Load the saved data
 		loggedInPlayerName = saveGame.getName();
 		archetype = chooseArchetype(saveGame.getArchetypeName());
-		maxhealthPoints = (archetype.healthPoints * 10);
+		maxhealthPoints = (archetype.healthPoints * 10;
 		healthPoints = saveGame.getHealthPoints();
 		maxmanaPoints = (archetype.manaPoints * 10);
 		manaPoints = saveGame.getManaPoints();

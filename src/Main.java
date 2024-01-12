@@ -3,11 +3,15 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		Text_Info s1 = new Text_Info();
-		SaveGame saveGame = new SaveGame();
-		Scanner scanner = new Scanner(System.in);
 
-		s1.get_Cover();
+		TextInfo textInfo = new TextInfo();
+		SaveGame saveGame = new SaveGame();
+		Scanner sc = new Scanner(System.in);
+
+		textInfo.get_Cover();
+		textInfo.startPrintStory();
+		System.out.println("\nPress any key to continue...");
+		sc.nextLine();
 		if (!saveGame.isLoggedIn()) {
 			saveGame.promptRegisterLogin(); // Prompt for registration or login
 		}
@@ -28,8 +32,9 @@ public class Main {
 			if (player != null) {
 				while (true) {
 					map.map_main(player);
-					System.out.println("Do you want to continue? (Y/N)");
-					if (scanner.nextLine().equalsIgnoreCase("N")) {
+					textInfo.printSavegame();
+					if (sc.nextLine().equalsIgnoreCase("Y")) {
+						System.out.println("Saving game progress for player: " + player.getloggedInPlayerName());
 						saveGame.savePlayerProgress(
 								player.getArchetypeName(),
 								player.getLevel(),
@@ -39,10 +44,13 @@ public class Main {
 								map.getA(),
 								map.getB());
 						break;
+					} else {
+						System.out.println("Game progress not saved.");
+						saveGame.deletePlayerUsername();
+						break;
 					}
 				}
 				saveGame.closeConnection();
-
 			}
 		} else {
 			System.out.println("Login failed. Exiting the game.");
@@ -51,7 +59,7 @@ public class Main {
 
 	private static Player createPlayer(SaveGame saveGame) {
 		Scanner sc = new Scanner(System.in);
-		Text_Info s1 = new Text_Info();
+		TextInfo textInfo = new TextInfo();
 		// System.out.println("Enter player name: ");
 		// String playerName = sc.nextLine();
 		String playerName = saveGame.getName();
@@ -62,13 +70,13 @@ public class Main {
 			// Initial game interface
 			// Should print a cover image of the adventure game
 			// Archetype Selection
-			s1.get_Select_Archetypes();
+			textInfo.get_Select_Archetypes();
 			System.out.print("Enter : ");
 			int arche = sc.nextInt();
 			if (arche < 1 || arche > 5) {
 				System.out.println("Invalid Input.");
 			} else {
-				s1.get_Archetypes_Info(arche);
+				textInfo.get_Archetypes_Info(arche);
 				System.out.print("YES / NO : ");
 				verify = sc.next();
 				if (verify.equalsIgnoreCase("YES")) {
