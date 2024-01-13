@@ -185,7 +185,7 @@ public class MapDesignAndPlayerMovement {
 			System.out.println("-------------------------------------------------------------------------------");
 
 			for (int k = 0; k < movement.length(); k++) {
-				if (movement.charAt(k) == 'w') {
+				if (movement.charAt(k) == 'w' && a > 0) {
 					if (map[a - 1][b] == '#') {
 						System.out.println("\nYou met an obstacle at number " + (k + 1)
 								+ " movement. Please take another route\n");
@@ -212,7 +212,7 @@ public class MapDesignAndPlayerMovement {
 					map[a][b] = ' ';
 					a--;
 				}
-				if (movement.charAt(k) == 'a') {
+				if (movement.charAt(k) == 'a' && b > 0) {
 					if (map[a][b - 1] == '#') {
 						System.out.println("\nYou met an obstacle at number " + (k + 1)
 								+ " movement. Please take another route\n");
@@ -233,13 +233,13 @@ public class MapDesignAndPlayerMovement {
 					if (map[a][b - 1] == 'D') {
 						System.out.println("Encountered Boss Monster at number " + (k + 1) + " movement.");
 						callBossMonster();
-						a--;
+						b--;
 						break;
 					}
 					map[a][b] = ' ';
 					b--;
 				}
-				if (movement.charAt(k) == 's') {
+				if (movement.charAt(k) == 's' && a < 39) {
 					if (map[a + 1][b] == '#') {
 						System.out.println("\nYou met an obstacle at number " + (k + 1)
 								+ " movement. Please take another route\n");
@@ -260,13 +260,13 @@ public class MapDesignAndPlayerMovement {
 					if (map[a + 1][b] == 'D') {
 						System.out.println("Encountered Boss Monster at number " + (k + 1) + " movement.");
 						callBossMonster();
-						a--;
+						a++;
 						break;
 					}
 					map[a][b] = ' ';
 					a++;
 				}
-				if (movement.charAt(k) == 'd') {
+				if (movement.charAt(k) == 'd' && b < 39) {
 					if (map[a][b + 1] == '#') {
 						System.out.println("\nYou met an obstacle at number " + (k + 1)
 								+ " movement. Please take another route\n");
@@ -287,20 +287,20 @@ public class MapDesignAndPlayerMovement {
 					if (map[a][b + 1] == 'D') {
 						System.out.println("Encountered Boss Monster at number " + (k + 1) + " movement.");
 						callBossMonster();
-						a--;
+						b++;
 						break;
 					}
 					map[a][b] = ' ';
 					b++;
 				}
 			}
-			if (a == 39 && (b == 20 || b == 21)) {
-				textInfo.clearScreen();
+			if (a >= 39 && (b == 20 || b == 21)) {
 				textInfo.printWinStory();
 				break;
 			}
 			if (player.isAlive()) {
 				textInfo.clearScreen();
+				textInfo.get_Cover();
 				System.out.println("Now, player is at row " + (a + 1) + " column " + (b + 1));
 				System.out.println(
 						"================================= Map after " + n + " movement =================================");

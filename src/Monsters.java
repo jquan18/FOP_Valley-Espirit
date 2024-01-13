@@ -67,7 +67,10 @@ public class Monsters {
 		} else {
 			defense_type = magicalDefense;
 		}
-		int realDamage = damage - ((defense_type / 20) * new Random().nextInt(8));
+		System.out.println("Damage: " + damage);
+		System.out.println("Defense: " + defense_type);
+		int realDamage = Math.max(0, damage - ((defense_type / 20) * (new Random().nextInt(8))));;
+		System.out.println("Real Damage: " + realDamage);
 		healthPoints = Math.max(0, healthPoints - realDamage);
 		System.out.println("You attacked the Monster and causing " + realDamage + " damage");
 	}
@@ -256,42 +259,42 @@ public class Monsters {
 
 class Slime extends Monsters {
 	public Slime() {
-		super("Slime",60);
+		super("Slime",50);
 	}
 }
 
 class Spider extends Monsters {
 	public Spider() {
-		super("Spider", 70);
+		super("Spider", 55);
 	}
 }
 
 class Skeleton_Warrior extends Monsters {
 	public Skeleton_Warrior() {
-		super("Skeleton Warrior", 80);
+		super("Skeleton Warrior", 60);
 	}
 }
 
 class Giant extends Monsters {
 	public Giant() {
-		super("Giant", 130);
+		super("Giant", 80);
 	}
 }
 
 class Witch extends Monsters {
 	public Witch() {
-		super("Witch", 140);
+		super("Witch", 90);
 	}
 }
 
 class Gargoyle extends Monsters {
 	public Gargoyle() {
-		super("Gargoyle", 150);
+		super("Gargoyle", 100);
 	}
 }
 
 class Dragon extends Monsters {
 	public Dragon() {
-		super("Dragon", 500);
+		super("Dragon", 150);
 	}
 }

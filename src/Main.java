@@ -22,13 +22,12 @@ public class Main {
 			if (!saveGame.isNewRegistered()) {
 				// Existing player
 				textInfo.clearScreen();
+				textInfo.get_Cover();
 				System.out.println("Welcome back, " + saveGame.getName() + "!");
 				player = new Player(saveGame);
 				map = new MapDesignAndPlayerMovement(saveGame.getcurrentLocationA(), saveGame.getcurrentLocationB());
 			} else {
 				// New player
-				textInfo.clearScreen();
-				textInfo.get_Cover();
 				textInfo.startPrintStory();
 				System.out.println("\n(Press any key to continue...)");
 				sc.nextLine();
@@ -56,7 +55,8 @@ public class Main {
 						break;
 					} else {
 						textInfo.printSavegame();
-						if (sc.nextLine().equalsIgnoreCase("Y")) {
+						char choice = sc.next().charAt(0);
+						if (Character.toUpperCase(choice) == 'Y') {
 							System.out.println("Saving game progress for player: " + player.getloggedInPlayerName());
 							saveGame.savePlayerProgress(
 									player.getArchetypeName(),
@@ -67,10 +67,12 @@ public class Main {
 									map.getA(),
 									map.getB());
 							break;
-						} else {
+						} else if (Character.toUpperCase(choice) == 'N'){
 							System.out.println("Game progress not saved.");
 							// saveGame.deletePlayerUsername();
 							break;
+						} else {
+							System.out.println("Invalid input. Please try again.");
 						}
 					}
 				}

@@ -79,7 +79,7 @@ public class PlayerSpell {
 				System.out.println("\033[0;34m[" + (i + 1) + "] is on cooldown. \nAnother " + spellCooldowns[i] + " turn(s) left.\033[0m");
 			} else if (manaPoints < getManaCost(i + 1)) {
 				// Here yellow color
-				System.out.println("\033[0;33mYou do not have enough mana to use spell [A" + (i + 1) + "] .\033[0m");
+				System.out.println("\033[0;33mYou do not have enough mana to use spell [" + (i + 1) + "] .\033[0m");
 			} else {
 				System.out.println("No spells available for this archetype.");
 			}
@@ -88,12 +88,15 @@ public class PlayerSpell {
 		if (gotSpell) {
 			int spellIndex;
 			while (true) {
-				System.out.println("Enter the spell you want to use: \n");
+				System.out.println("[0] to return to battle menu.\n");
+				System.out.println("Enter the spell you want to use: ");
 				spellIndex = input.nextInt();
 				if (spellIndex >= 1 && spellIndex <= 3) {
 					return castSpell(spellIndex, monsters);
+				} else if (spellIndex == 0) {
+					return false;
 				} else {
-					System.out.println("Invalid spell choice.");
+					System.out.println("\nInvalid spell choice.");
 					return false;
 				}
 			}

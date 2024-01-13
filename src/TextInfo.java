@@ -58,6 +58,8 @@ public class TextInfo {
 
 	// Storyline
 	public void startPrintStory() {
+		clearScreen();
+		get_Cover();
 		try {
 			String s = "\033[0;30mThe year is \033[0;97m\u001B[1m2024 AC\033[0m\033[0;30m(After \033[0;31mCatacylsm\033[0;30m).\r\n"
 					+ //
@@ -97,6 +99,8 @@ public class TextInfo {
 	}
 
 	public void printLoseStory(String name) {
+		clearScreen();
+		get_Cover();
 		try {
 			String s = "The last thing you see is the gaping maw of the monster in front of you as it slowly approaches, ready to devour you whole.\r\n"
 					+ //
@@ -116,6 +120,8 @@ public class TextInfo {
 	}
 
 	public void printWinStory() {
+		clearScreen();
+		get_Cover();
 		try {
 			String s1 = "\033[0;30mYou walk towards the exit, hoping to discover what lies behind the halls of \033[0;31mFOP Valley\033[0;30m.\r\n"
 					+ //
