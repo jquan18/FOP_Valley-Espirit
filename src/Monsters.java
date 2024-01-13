@@ -67,10 +67,7 @@ public class Monsters {
 		} else {
 			defense_type = magicalDefense;
 		}
-		System.out.println("Damage: " + damage);
-		System.out.println("Defense: " + defense_type);
 		int realDamage = Math.max(0, damage - ((defense_type / 20) * (new Random().nextInt(8))));;
-		System.out.println("Real Damage: " + realDamage);
 		healthPoints = Math.max(0, healthPoints - realDamage);
 		System.out.println("You attacked the Monster and causing " + realDamage + " damage");
 	}
