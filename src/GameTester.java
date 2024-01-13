@@ -13,7 +13,7 @@ public class GameTester {
 		Scanner scanner = new Scanner(System.in);
 
 		s1.get_Cover();
-		s1.startPrintStory();
+		// s1.startPrintStory();
 		System.out.println("\nPress any key to continue...");
 		scanner.nextLine();
 		Player player = createPlayer();

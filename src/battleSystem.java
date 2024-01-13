@@ -12,7 +12,7 @@ public class battleSystem {
 	private PlayerSpell playerSpell;
 	private LevelSystem playerLevel;
 	private int roundsToSkip = 0;
-	private TextInfo textInfo = new TextInfo();
+	// private TextInfo textInfo = new TextInfo();
 
 	public battleSystem(Player player, Monsters monsters) {
 		this.player = player;
@@ -62,7 +62,7 @@ public class battleSystem {
 
 			if (!player.isAlive()) {
 				System.out.println("You are defeated by " + monsters.getName());
-				textInfo.printLoseStory(player.getloggedInPlayerName());
+				// textInfo.printLoseStory(player.getloggedInPlayerName());
 				break;
 			}
 			playerSpell.decreaseCooldowns();
@@ -160,12 +160,12 @@ public class battleSystem {
 		monsters.displayMonstersStatus();
 	}
 
-	public void displayMonsterImage(String monsters ){
-		String[] monsters_type = {"Slime", "Spider", "Skeleton_Warrior", "Giant", "Witch", "Gargoyle"};
+	public void displayMonsterImage(String monsters){
+		String[] monsters_type = {"Slime", "Spider", "Skeleton Warrior", "Giant", "Witch", "Gargoyle", "Dragon"};
 		for (int i=0; i<monsters_type.length; i++) {
 			if (monsters.equalsIgnoreCase(monsters_type[i])) {
 				String currentWorkingDir = System.getProperty("user.dir");
-				String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/ASCII_Formal/" + monsters_type[i] +".txt";
+				String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/ASCII_art/" + monsters_type[i] +".txt";
 				try {
 					Scanner reader = new Scanner(new FileInputStream(relativePath));
 					while (reader.hasNextLine()) {

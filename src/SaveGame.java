@@ -58,7 +58,7 @@ public class SaveGame {
 	// Prompt user to register or login
 	public void promptRegisterLogin() {
 
-		System.out.println("Please enter your choice: " +
+		System.out.print("Please enter your choice: " +
 				"\n1. Register" +
 				"\n2. Login" +
 				"\n3. Exit" +
@@ -82,7 +82,7 @@ public class SaveGame {
 	// Method overloading to register a new user
 	public void registerUser() {
 		while (true) {
-			System.out.print("Please enter your username: ");
+			System.out.print("\nPlease enter your username: ");
 			String username = sc.next();
 			System.out.print("\nPlease enter your password: ");
 			String password = sc.next();
@@ -199,7 +199,6 @@ public class SaveGame {
 
 	// Method load game progress for a player
 	public boolean loadPlayerProgress() {
-		System.out.println("isloggedin: " + isLoggedIn);
 		if (isLoggedIn) {
 			try {
 				String query = "SELECT * FROM player_progress WHERE player_name = ?";
@@ -247,29 +246,6 @@ public class SaveGame {
 			System.out.println("Please log in to delete player username.");
 		}
 	}
-
-	// Reset player progress
-	// public void resetPlayerProgress() {
-	// 	if (isLoggedIn) {
-	// 		try {
-	// 			String query = "REPLACE INTO player_progress (player_name, level, health_points, mana_points, current_location_a, current_location_b) VALUES (?, ?, ?, ?, ?, ?)";
-	// 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-	// 			preparedStatement.setString(1, loggedInPlayerName);
-	// 			preparedStatement.setInt(2, 1);
-	// 			preparedStatement.setInt(3, 100);
-	// 			preparedStatement.setInt(4, 100);
-	// 			preparedStatement.setInt(5, 1);
-	// 			preparedStatement.setInt(6, 20);
-
-	// 			preparedStatement.executeUpdate();
-	// 		} catch (SQLException e) {
-	// 			System.out.println("Error: Unable to reset player progress.");
-	// 			e.printStackTrace();
-	// 		}
-	// 	} else {
-	// 		System.out.println("Please log in to reset player progress.");
-	// 	}
-	// }
 
 	// Close the connection when done
 	public void closeConnection() {

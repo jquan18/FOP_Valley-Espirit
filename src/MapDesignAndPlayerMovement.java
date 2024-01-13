@@ -73,9 +73,9 @@ public class MapDesignAndPlayerMovement {
 			for (int j = 0; j < map1.length; j++) {
 				if (i == 0) {
 					map1[i][j] = '#';
-					if (j > 18 && j < 22) {
-						map1[i][j] = '=';
-					}
+					// if (j > 18 && j < 22) {
+					// 	map1[i][j] = '=';
+					// }
 				}
 				if (i == 38) {
 					map1[i][j] = ' ';
@@ -295,10 +295,12 @@ public class MapDesignAndPlayerMovement {
 				}
 			}
 			if (a == 39 && (b == 20 || b == 21)) {
+				textInfo.clearScreen();
 				textInfo.printWinStory();
 				break;
 			}
 			if (player.isAlive()) {
+				textInfo.clearScreen();
 				System.out.println("Now, player is at row " + (a + 1) + " column " + (b + 1));
 				System.out.println(
 						"================================= Map after " + n + " movement =================================");

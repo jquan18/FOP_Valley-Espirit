@@ -256,42 +256,42 @@ public class Monsters {
 
 class Slime extends Monsters {
 	public Slime() {
-		super("Slime",40);
+		super("Slime",60);
 	}
 }
 
 class Spider extends Monsters {
 	public Spider() {
-		super("Spider", 50);
+		super("Spider", 70);
 	}
 }
 
 class Skeleton_Warrior extends Monsters {
 	public Skeleton_Warrior() {
-		super("Skeleton Warrior", 60);
+		super("Skeleton Warrior", 80);
 	}
 }
 
 class Giant extends Monsters {
 	public Giant() {
-		super("Giant", 70);
+		super("Giant", 130);
 	}
 }
 
 class Witch extends Monsters {
 	public Witch() {
-		super("Witch", 80);
+		super("Witch", 140);
 	}
 }
 
 class Gargoyle extends Monsters {
 	public Gargoyle() {
-		super("Gargoyle", 100);
+		super("Gargoyle", 150);
 	}
 }
 
 class Dragon extends Monsters {
 	public Dragon() {
-		super("Dragon", 200);
+		super("Dragon", 500);
 	}
 }

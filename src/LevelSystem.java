@@ -44,6 +44,7 @@ class LevelSystem {
 	}
 
 	public void LevelUp() {
+		Scanner sc = new Scanner(System.in);
 		int i = 0;
 		previousLevel = currentLevel;
 		while (i < RequiredEXP.length && currentEXP > RequiredEXP[i]) {
@@ -53,7 +54,8 @@ class LevelSystem {
 		player.setLevel(i + 1);
 		System.out.println("You are Level " + (i + 1) + " now");
 		Extra_Points();
-		System.out.println("");
+		System.out.println("\n(Press any key to continue...)");
+		sc.nextLine();
 		// Unlock_Spell();
 	}
 
@@ -121,27 +123,27 @@ class LevelSystem {
 			}
 			switch (enchance) {
 				case "healthPoints":
-					System.out.println("Your healthPoint become stronger!");
+					System.out.println("Your Health Point increased!");
 					player.levelupHealthPoints(); // Increase healthPoints
 					break;
 				case "manaPoints":
-					System.out.println("Your manaPoints become stronger!");
+					System.out.println("Your Mana Points increased!");
 					player.levelupManaPoints(); // Increase manaPoints
 					break;
 				case "physicalDefense":
-					System.out.println("Your physicalDefense become stronger!");
+					System.out.println("Your Physical Defense become stronger!");
 					player.levelupPhysicalDefense(); // Increase physicalDefense
 					break;
 				case "magicalDefense":
-					System.out.println("Your magicalDefense become stronger!");
+					System.out.println("Your Magical Defense become stronger!");
 					player.levelupMagicalDefense(); // Increase magicalDefense
 					break;
 				case "physicalAttack":
-					System.out.println("Your physicalAttack become stronger!");
+					System.out.println("Your Physical Attack become stronger!");
 					player.levelupPhysicalAttack(); // Increase physicalAttack
 					break;
 				case "magicalAttack":
-					System.out.println("Your magicalAttack become stronger!");
+					System.out.println("Your Magical Attack become stronger!");
 					player.levelupMagicalAttack(); // Increase magicalAttack
 					break;
 				default:

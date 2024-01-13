@@ -8,46 +8,70 @@ public class Main {
 		SaveGame saveGame = new SaveGame();
 		Scanner sc = new Scanner(System.in);
 
-		textInfo.get_Cover();
-		textInfo.startPrintStory();
-		System.out.println("\nPress any key to continue...");
-		sc.nextLine();
+		textInfo.clearScreen();
 		if (!saveGame.isLoggedIn()) {
+			textInfo.get_Cover();
 			saveGame.promptRegisterLogin(); // Prompt for registration or login
+			textInfo.clearScreen();
 		}
 
 		if (saveGame.isLoggedIn()) {
+			textInfo.get_Cover();
 			Player player = null;
 			MapDesignAndPlayerMovement map = null;
 			if (!saveGame.isNewRegistered()) {
 				// Existing player
+				textInfo.clearScreen();
+				System.out.println("Welcome back, " + saveGame.getName() + "!");
 				player = new Player(saveGame);
 				map = new MapDesignAndPlayerMovement(saveGame.getcurrentLocationA(), saveGame.getcurrentLocationB());
 			} else {
 				// New player
+				textInfo.clearScreen();
+				textInfo.get_Cover();
+				textInfo.startPrintStory();
+				System.out.println("\n(Press any key to continue...)");
+				sc.nextLine();
 				player = createPlayer(saveGame);
 				map = new MapDesignAndPlayerMovement(1, 20);
 			}
 
 			if (player != null) {
+				// Save initial player progress
+				saveGame.savePlayerProgress(
+						player.getArchetypeName(),
+						player.getLevel(),
+						player.getExperiencePoint(),
+						player.gethealthPoints(),
+						player.getmanaPoints(),
+						map.getA(),
+						map.getB());
+
 				while (true) {
 					map.map_main(player);
-					textInfo.printSavegame();
-					if (sc.nextLine().equalsIgnoreCase("Y")) {
-						System.out.println("Saving game progress for player: " + player.getloggedInPlayerName());
-						saveGame.savePlayerProgress(
-								player.getArchetypeName(),
-								player.getLevel(),
-								player.getExperiencePoint(),
-								player.gethealthPoints(),
-								player.getmanaPoints(),
-								map.getA(),
-								map.getB());
+					if (!player.isAlive()) {
+						textInfo.clearScreen();
+						textInfo.get_Cover();
+						textInfo.printLoseStory(player.getloggedInPlayerName());
 						break;
 					} else {
-						System.out.println("Game progress not saved.");
-						saveGame.deletePlayerUsername();
-						break;
+						textInfo.printSavegame();
+						if (sc.nextLine().equalsIgnoreCase("Y")) {
+							System.out.println("Saving game progress for player: " + player.getloggedInPlayerName());
+							saveGame.savePlayerProgress(
+									player.getArchetypeName(),
+									player.getLevel(),
+									player.getExperiencePoint(),
+									player.gethealthPoints(),
+									player.getmanaPoints(),
+									map.getA(),
+									map.getB());
+							break;
+						} else {
+							System.out.println("Game progress not saved.");
+							// saveGame.deletePlayerUsername();
+							break;
+						}
 					}
 				}
 				saveGame.closeConnection();
@@ -60,8 +84,6 @@ public class Main {
 	private static Player createPlayer(SaveGame saveGame) {
 		Scanner sc = new Scanner(System.in);
 		TextInfo textInfo = new TextInfo();
-		// System.out.println("Enter player name: ");
-		// String playerName = sc.nextLine();
 		String playerName = saveGame.getName();
 		String player_archetype = "";
 

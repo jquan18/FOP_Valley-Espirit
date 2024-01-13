@@ -7,7 +7,7 @@ public class TextInfo {
 
 	public void get_Cover() {
 		String currentWorkingDir = System.getProperty("user.dir");
-		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/Cover.txt";
+		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/ASCII_art/Cover.txt";
 		// Read ASCII art from file
 		String asciiArt = readFromFile(relativePath);
 
@@ -27,7 +27,7 @@ public class TextInfo {
 	public void get_Select_Archetypes() {
 
 		String currentWorkingDir = System.getProperty("user.dir");
-		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/Select_Archetypes.txt";
+		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/Archetype/Select_Archetypes.txt";
 
 		String selectArchetypes = readFromFile(relativePath);
 		System.out.println(selectArchetypes);
@@ -37,7 +37,7 @@ public class TextInfo {
 		String currentWorkingDir = System.getProperty("user.dir");
 		String[] archetype = { "Archer_Info.txt", "Paladin_Info.txt", "Warrior_Info.txt", "Mage_Info.txt",
 				"Rogue_Info.txt" };
-		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/" + archetype[num - 1];
+		String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/Archetype/" + archetype[num - 1];
 
 		String archetypesInfo = readFromFile(relativePath);
 		System.out.println(archetypesInfo);
@@ -89,7 +89,7 @@ public class TextInfo {
 			char[] c = s.toCharArray();
 			for (int i = 0; i < c.length; i++) {
 				System.out.print(c[i]);
-				Thread.sleep(30);
+				Thread.sleep(20);
 			}
 		} catch (Exception a) {
 			a.printStackTrace();
@@ -104,7 +104,7 @@ public class TextInfo {
 					+ //
 					"However, before your soul could leave your body, a voice spoke to you. \r\n" + //
 					"\"\033[1;34m" + name
-					+ "\033[0m\033[0;30m, your time has not come yet. \033[0;31mThe Earth\033[0;30m has chosen \033[1;37m\u001B[4myou\033[0m\033[0;30m, and it is unwilling to let you leave so easily. Arise once more, and conquer \u001B[4m\033[0;31mFOP Valley\033[0m\033[0;30m once and for all.\"";
+					+ "\033[0m\033[0;30m, your time has not come yet. \033[0;31mThe Earth\033[0;30m has chosen \033[1;37m\u001B[4myou\033[0m\033[0;30m, and it is unwilling to let you leave so easily. Arise once more, and conquer \u001B[4m\033[0;31mFOP Valley\033[0m\033[0;30m once and for all.\"\n";
 			char[] c = s.toCharArray();
 			for (int i = 0; i < c.length; i++) {
 				System.out.print(c[i]);
@@ -205,8 +205,8 @@ public class TextInfo {
 	}
 
 	public void printSavegame() {
-		String s1 = "Do you wish to save your journey and the fate of Earth?"
-		+ "\nType \'Y\' to save your progress or \'N\' to exit without saving :";
+		String s1 = "\nDo you wish to save your journey and the fate of Earth?"
+				+ "\nType \'Y\' to save your progress or \'N\' to exit without saving :";
 		char[] c1 = s1.toCharArray();
 		try {
 			for (int i = 0; i < c1.length; i++) {
@@ -214,6 +214,23 @@ public class TextInfo {
 				Thread.sleep(30);
 			}
 		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void clearScreen() {
+		// Check the operating system
+		String os = System.getProperty("os.name").toLowerCase();
+
+		try {
+			if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
+				// For Linux/Unix/Mac
+				new ProcessBuilder("clear").inheritIO().start().waitFor();
+			} else if (os.contains("win")) {
+				// For Windows
+				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

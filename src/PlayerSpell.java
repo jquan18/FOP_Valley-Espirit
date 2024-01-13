@@ -29,7 +29,7 @@ public class PlayerSpell {
 	private void loadSpells(String playerArchetype) {
 		try {
 			String currentWorkingDir = System.getProperty("user.dir");
-			String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/spells.txt";
+			String relativePath = currentWorkingDir + "/Y1S1/FOP_Valley2/resources/Archetype/spells.txt";
 			Scanner reader = new Scanner(new FileInputStream(relativePath));
 
 			int i = 0;
@@ -94,6 +94,7 @@ public class PlayerSpell {
 					return castSpell(spellIndex, monsters);
 				} else {
 					System.out.println("Invalid spell choice.");
+					return false;
 				}
 			}
 		}
