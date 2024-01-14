@@ -50,3 +50,14 @@ javac *.java
 # Run the game
 java Main
 ```
+
+## Acknowledgements
+
+Special thanks to our dedicated team members who played a crucial role in the development of FOP Valley:
+
+- **TION YUN ZHE**
+- **NIU BINGKUN**
+- **ENG KE JIA**
+- **NATHANIEL SAUT SIDAURUK**
+
+We appreciate the collaborative efforts, creativity, and hard work of each team member, which collectively made FOP Valley a successful project.
