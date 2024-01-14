@@ -55,9 +55,9 @@ java Main
 
 Special thanks to our dedicated team members who played a crucial role in the development of FOP Valley:
 
-- **TION YUN ZHE**
-- **NIU BINGKUN**
-- **ENG KE JIA**
-- **NATHANIEL SAUT SIDAURUK**
+- **TION YUN ZHE** [https://github.com/TIONYUNZHE2004]
+- **NIU BINGKUN** [https://github.com/NIUBIAN7]
+- **ENG KE JIA** [https://github.com/Kejia1125]
+- **NATHANIEL SAUT SIDAURUK** [https://github.com/Nss2004]
 
 We appreciate the collaborative efforts, creativity, and hard work of each team member, which collectively made FOP Valley a successful project.
