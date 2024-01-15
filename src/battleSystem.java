@@ -64,6 +64,7 @@ public class battleSystem {
 				System.out.println("You are defeated by " + monsters.getName());
 				// textInfo.printLoseStory(player.getloggedInPlayerName());
 				break;
+
 			}
 			playerSpell.decreaseCooldowns();
 			player.replenishMana();
@@ -106,8 +107,14 @@ public class battleSystem {
 			}
 
 			case "S4": {
-				player.tryEscaped();
-				break;
+				if (monsters.getName().equals("Dragon")) {
+					System.out.println("You can't escape from the Dragon");
+					playerTurn();
+					break;
+				} else {
+					player.tryEscaped();
+					break;
+				}
 			}
 
 			case "S5": {
